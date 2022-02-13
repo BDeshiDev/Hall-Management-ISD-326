@@ -3,8 +3,8 @@
 ```
 python manage.py dumpdata --format "xml" > "fixture.xml"
 ```
-* Django seems to mess up encoding, after dumping, open in notepad and save as and overwrite wit utf-8 as encoding
-* alternatively, edit the fixture file’s first line to user utf-16
+* Django seems to mess up encoding, after dumping, open in notepad and save as and overwrite with utf-8 as encoding
+* alternatively, edit the fixture file’s first line to use utf-16
 * `<?xml version="1.0" encoding="utf-16"?>`
     
     
