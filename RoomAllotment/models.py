@@ -4,7 +4,7 @@ from django.db import models
 class Student(models.Model):
     stdID = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=200)
-    password = models.IntegerField(default=123456)# this should be hashed I guess
+    password = models.IntegerField(default=123456)
 
 
 class Room(models.Model):

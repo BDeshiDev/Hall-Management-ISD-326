@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-j%m(c1ivk61hqgfn(+!70w*$htpc1a_t#my&6qfel^g&$dh5yy
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+FIXTURE_DIRS =[BASE_DIR / 'fixtures']
 
 # Application definition
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'RoomAllotment.apps.RoomAllotConfig',
     'crispy_forms',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
