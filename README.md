@@ -1,5 +1,5 @@
 # Hall-Management-ISD-326
-Exporting current DB data:
+## Exporting current DB data:
 ```
 python manage.py dumpdata --format "xml" > "fixture.xml"
 ```
@@ -8,16 +8,16 @@ python manage.py dumpdata --format "xml" > "fixture.xml"
 * `<?xml version="1.0" encoding="utf-16"?>`
     
     
-loading exported data
+## loading exported data
 ```
 python manage.py loaddata "fixture.xml"
 ````
 
-loading exported data
+## loading exported data
 ```
 python manage.py loaddata "fixture.xml"
 ````
-Resetting DB
+## Resetting DB
 ```
 python manage.py flush
 ```
