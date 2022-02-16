@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Room(models.Model):
@@ -33,3 +34,18 @@ class RoomAllotmentRequest(models.Model):
 
     def __str__(self):
         return f'ID: {self.stdID}, RequestedRoomNo: {self.requestedRoomNo}'
+
+
+class Provost(models.Model):
+    provostID = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=200)
+    password = models.IntegerField(default=123456)
+
+
+class Notification(models.Model):
+    notifID = models.IntegerField(primary_key=True)
+    studentID = models.ForeignKey(Student, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now)
+    title = models.CharField(max_length=200)
+    details = models.CharField(max_length=200, null=True, blank=True)
+    seen = models.BooleanField(default=False)
