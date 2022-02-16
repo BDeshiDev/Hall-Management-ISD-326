@@ -12,11 +12,6 @@ python manage.py dumpdata --format "xml" > "fixture.xml"
 ```
 python manage.py loaddata "fixture.xml"
 ````
-
-## loading exported data
-```
-python manage.py loaddata "fixture.xml"
-````
 ## Resetting DB
 ```
 python manage.py flush
