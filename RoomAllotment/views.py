@@ -4,6 +4,28 @@ from django.shortcuts import render
 from .models import *
 from .forms import *
 
+from django.view import View
+
+
+
+class HomeView(View):
+    pass
+
+class StudentHomeView(View):
+    pass
+
+class ProvostHomeView(View):
+    pass
+
+class LoginView(View):
+    pass
+
+class StudentRoomReqView(View):
+    pass
+
+class ProvostRoomAllotView(View):
+    pass
+
 
 def view_requests(request):
     requests = RoomAllotmentRequest.objects.all()
