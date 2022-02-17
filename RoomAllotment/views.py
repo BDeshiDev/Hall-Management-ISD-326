@@ -6,25 +6,40 @@ from .forms import *
 
 from django.views import View
 
-
-
 class HomeView(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('Home view')
 
 class StudentHomeView(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        std_id = kwargs['std_id']
+        return HttpResponse(f'Studnet home view {std_id}')
 
 class ProvostHomeView(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        prv_id = kwargs['prv_id']
+        return HttpResponse(f'provost home view {prv_id}')
 
 class LoginView(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('login view')
 
 class StudentRoomReqView(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        std_id = kwargs['std_id']
+        return HttpResponse(f'student room request view {std_id}')
 
 class ProvostRoomAllotView(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        prv_id = kwargs['prv_id']
+        return HttpResponse(f'provost room allotment view {prv_id}' )
+
+
+
+
+
+
+
 
 
 def view_requests(request):
