@@ -14,6 +14,17 @@ class Student(models.Model):
     password = models.IntegerField(default=123456)
     roomNo = models.ForeignKey(Room, null=True, blank=True, on_delete=models.CASCADE)
 
+    # not sure if normal fields are okay in models
+    # seems kinda pointless to store these in DB, hence functions
+    # mainly for ease of use after get_user() is used.
+    @staticmethod
+    def is_provost():
+        return False
+
+    @staticmethod
+    def is_student():
+        return True
+
 
 class RoomAllotmentRequest(models.Model):
     RequestID = models.AutoField(primary_key=True)
@@ -40,6 +51,17 @@ class Provost(models.Model):
     provostID = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=200)
     password = models.IntegerField(default=123456)
+
+    # not sure if normal fields are okay in models
+    # seems kinda pointless to store these in DB, hence functions
+    # mainly for ease of use after get_user() is used.
+    @staticmethod
+    def is_provost():
+        return True
+
+    @staticmethod
+    def is_student():
+        return False
 
 
 class Notification(models.Model):
