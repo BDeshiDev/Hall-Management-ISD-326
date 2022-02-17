@@ -8,7 +8,8 @@ from django.views import View
 
 class HomeView(View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse('Home view')
+        #return HttpResponse('Home view')
+        return render(request, 'RoomAllotment/home_page.html')
 
 class StudentHomeView(View):
     def get(self, request, *args, **kwargs):
