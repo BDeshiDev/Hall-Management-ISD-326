@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 
 <html>
@@ -22,16 +24,16 @@
             }
             @keyframes animate{
                 0%,100%{
-                    background-image: url("image/university.jpg");
+                    background-image: url("{% static 'image/university.jpg' %}");
                 }
                 25%{
-                    background-image: url("image/university.jpg");
+                    background-image: url("{% static 'image/university.jpg' %}");
                 }
                 50%{
-                    background-image: url("image/university.jpg");
+                    background-image: url("{% static 'image/university.jpg' %}");
                 }
                 75%{
-                    background-image: url("image/university.jpg");
+                    background-image: url("{% static 'image/university.jpg' %}");
                 }
             }
             .wrapper{
@@ -178,11 +180,11 @@
         <div class="container">
             <p>
                 <div class="image_box1">
-                    <img src="image/home.png"  style="width: 30px">
+                    <img src="{% static 'image/home.png' %}"  style="width: 30px">
                 </div>
                 <br>
             
-                <a href="home_page.html">
+                <a href="/">
                     <font size="4" style="margin-left: 80px; color:white; font-weight: bold">
                         Home
                     </font>
@@ -192,7 +194,7 @@
                 <font size="4" style="margin-left: 20px; color:white; font-weight: bold">User Manual</font>
 
 
-                <a href="login.html">
+                <a href="login">
                 <font size="4" style="margin-left: 920px; color:white; font-weight: bold">Log In</font>
                 </a>
 
@@ -223,7 +225,7 @@
                 
                     <br>
                     <div class="lower_box1">
-                        <img src="image/1.jpg"  style="width: 300px">
+                        <img src="{% static 'image/1.jpg' %}"  style="width: 300px">
                         
                         <font size="5" style="color:black; font-weight: bold;">
                          <center>Student Welfare</center> 
@@ -235,7 +237,7 @@
                         </font>
                     </div>
                     <div class="lower_box2">
-                        <img src="image/2.jpg"  style="width: 300px">
+                        <img src="{% static 'image/2.jpg' %}"  style="width: 300px">
                         
                         <font size="5" style="color:black; font-weight: bold;">
                          <center>Dining Management</center>
@@ -247,7 +249,7 @@
                         </font>
                     </div>
                     <div class="lower_box3">
-                        <img src="image/3.jpg"  style="width: 300px">
+                        <img src="{% static 'image/3.jpg' %}"  style="width: 300px">
                         
                         <font size="5" style="color:black; font-weight: bold;">
                          <center>Reading Room</center> 
