@@ -11,8 +11,19 @@ python manage.py dumpdata --format "xml" > "fixture.xml"
 ## loading exported data
 ```
 python manage.py loaddata "fixture.xml"
-````
+```
 ## Resetting DB
 ```
 python manage.py flush
 ```
+
+## Views And Templates
+template files are placed in _BASE/RoomAllotment/templates/RoomAllotment_ and images are kept in _BASE/static/image_
+
+Allowed non-admin urls:
+1. /
+2. /login
+3. /student/<std_id>
+4. /provost/<prv_id>
+5. /student/<std_id>/room-req
+6. /provost/<prv_id>/room-allot
