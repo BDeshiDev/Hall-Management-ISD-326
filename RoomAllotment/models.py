@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from django.utils import timezone
 
@@ -11,8 +12,17 @@ class Room(models.Model):
 class Student(models.Model):
     stdID = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=200)
-    password = models.IntegerField(default=123456)
+    password = models.CharField(max_length=100,default=123456)
+    cgpa = models.FloatField(null=True)
+    mobile_no = models.IntegerField(null=True, blank=True)
+    level = models.IntegerField(default=3)
+    term = models.IntegerField(default=2)
+    present_address = models.CharField(max_length=200,null=True, blank=True)
+    permanent_address = models.CharField(max_length=200,null=True, blank=True)
+    email = models.EmailField(max_length=100,null=True, blank=True)
+    department = models.CharField(max_length=100,default="CSE")  
     roomNo = models.ForeignKey(Room, null=True, blank=True, on_delete=models.CASCADE)
+    
 
     # not sure if normal fields are okay in models
     # seems kinda pointless to store these in DB, hence functions
@@ -32,7 +42,10 @@ class RoomAllotmentRequest(models.Model):
     requestedRoomNo = models.ForeignKey(Room, on_delete=models.CASCADE)
     attachment = models.FileField(null=True, blank=True)
     message = models.CharField(max_length=200, null=True, blank=True)
-    skill = models.CharField(max_length=200, null=True, blank=True)
+    sports = models.BooleanField(default=False)
+    debate = models.BooleanField(default=False)
+    other_skill = models.CharField(max_length=200, null=True, blank=True)
+
     PENDING = 1
     ACCEPTED = 2
     DECLINED = 3
@@ -43,6 +56,7 @@ class RoomAllotmentRequest(models.Model):
     )
     approvalStatus = models.IntegerField(choices=APPROVAL_STATUS, default=PENDING)
 
+
     def __str__(self):
         return f'ID: {self.stdID}, RequestedRoomNo: {self.requestedRoomNo}'
 
@@ -50,7 +64,13 @@ class RoomAllotmentRequest(models.Model):
 class Provost(models.Model):
     provostID = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=200)
-    password = models.IntegerField(default=123456)
+    password = models.CharField(max_length=100,default=123456)
+    mobile_no = models.IntegerField(null=True, blank=True)
+    email = models.EmailField(max_length=100,null=True, blank=True)
+    department = models.CharField(max_length=100,default="CSE")
+    post = models.CharField(max_length=100,default="Professor") 
+    start_timestamp = models.DateTimeField(default=timezone.now)
+    end_timestamp = models.DateTimeField(null=True)
 
     # not sure if normal fields are okay in models
     # seems kinda pointless to store these in DB, hence functions

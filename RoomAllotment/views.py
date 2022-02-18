@@ -6,6 +6,37 @@ from .forms import *
 from .AuthHelper import *
 from django.urls import reverse
 
+from django.views import View
+
+class HomeView(View):
+    def get(self, request, *args, **kwargs):
+        #return HttpResponse('Home view')
+        return render(request, 'RoomAllotment/home_page.html')
+
+class StudentHomeView(View):
+    def get(self, request, *args, **kwargs):
+        std_id = kwargs['std_id']
+        return HttpResponse(f'Studnet home view {std_id}')
+
+class ProvostHomeView(View):
+    def get(self, request, *args, **kwargs):
+        prv_id = kwargs['prv_id']
+        return HttpResponse(f'provost home view {prv_id}')
+
+class LoginView(View):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('login view')
+
+class StudentRoomReqView(View):
+    def get(self, request, *args, **kwargs):
+        std_id = kwargs['std_id']
+        return HttpResponse(f'student room request view {std_id}')
+
+class ProvostRoomAllotView(View):
+    def get(self, request, *args, **kwargs):
+        prv_id = kwargs['prv_id']
+        return HttpResponse(f'provost room allotment view {prv_id}' )
+
 def view_requests(request):
     requests = RoomAllotmentRequest.objects.all()
     context = {'requests': requests}
