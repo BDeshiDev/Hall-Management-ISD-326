@@ -53,11 +53,7 @@ def is_logged_in(request):
 # return provost object if success
 def login_user_provost(request, provost_name, provost_password):
     provost = Provost.objects.get(name=provost_name)
-    # if provost and provost.password == provost_password:
-    #     request.session['user'] = provost
-    #     return True
-    # fix when password no longer int
-    if provost and str(provost.password) == provost_password:
+    if provost and provost.password == provost_password:
         request.session['provost_name'] = provost_name
         return provost
     return None
@@ -67,13 +63,7 @@ def login_user_provost(request, provost_name, provost_password):
 def login_user_student(request, student_id, student_password):
     student = Student.objects.get(pk=student_id)
     if student:
-        # uncomment when password field changes to string
-        # if student.password == student_password:
-        #     request.session['user'] = student
-        #     return True
-        # else:
-        #     print("Student Password mismatch ", student.password, str(student.password))
-        if str(student.password) == student_password:
+        if student.password == student_password:
             # model is a db thing
             # can't store in this dictionary
             # store id instead
