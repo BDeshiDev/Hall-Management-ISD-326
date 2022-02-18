@@ -263,7 +263,7 @@
                 position: absolute;
                 background-color: white;
                 top:22%;
-                left: 81%;
+                left: 85%;
                 width:25px;
                 height: 25px;
             }
@@ -271,7 +271,7 @@
                 position: absolute;
                 background-color: white;
                 top:22%;
-                left: 84%;
+                left: 88%;
                 width:25px;
                 height: 25px;
             }
@@ -420,7 +420,7 @@
             .attachment_box{
                 position: absolute;
                 background-color: #578999;
-                top:63%;
+                top:58%;
                 left: 15%;
                 width 350px;
                 height: 40px;
@@ -494,57 +494,60 @@
       
       <div class="anotherBg_box">
           <p>
-              <br>
-              <font size="4" style="margin-left: 17px; color:white;">Preferred Room No(Optional)</font>
-              <font size="4" style="margin-left: 20px; color: white">
-              <input type="text" name="room_no" placeholder="Enter room No" size="10px 10px" maxlength="20" id="room_no" >
-              </font>
+              <form action="notification.html" id="send">
+                  
+                  <font size="4" style="margin-left: 17px; color:white;">Preferred Room No(Optional)</font>
+                  <font size="4" style="margin-left: 20px; color: white">
+                  <input type="text" name="room_no" placeholder="Enter room No" size="10px 10px" maxlength="20" id="room_no" >
+                  </font>
 
-              <br>
-              <font size="4" style="margin-left: 17px; color:white;">Application</font>
-              <br>
-              <font size="4" style="margin-left: 17px; color: white">
-              <textarea id="room_application" name="room_applocation" rows="9" cols="110">
-      </textarea>
-              </font>
+                  <br>
+                  <font size="4" style="margin-left: 17px; color:white;">Application</font>
+                  <br>
+                  <font size="4" style="margin-left: 17px; color: white">
+                  <textarea id="room_application" name="room_applocation" rows="8" cols="110">
+          </textarea>
+                  </font>
 
-              <br>
-              <font size="4" style="margin-left: 17px; color:white;">Attach documents</font>
-              <div class="attachment_box">
-                  <input type="file" id="attached_file" name="attached_file" multiple>
-              </div>
-              
-              <br>
-              <font size="4" style="margin-left: 17px; color:white;">Skill</font>
-              <br>
-              
-              <label for="html">
-                  <input type="radio" id="sports" name="skill" value="sports" style="margin-left: 17px;">
-                  <font size="3" style="margin-left: 8px; color:white;">
-                      Sports
+                  <br><br>
+                  <font size="4" style="margin-left: 17px; color:white;">Attach documents</font>
+                  <div class="attachment_box">
+                      <input type="file" id="attached_file" name="attached_file" multiple>
+                  </div>
+
+                  <br><br>
+                  <font size="4" style="margin-left: 17px; color:white;">Skill</font>
+                  <br>
+
+                  <label for="html">
+                      <input type="radio" id="sports" name="skill" value="sports" style="margin-left: 17px;">
+                      <font size="3" style="margin-left: 8px; color:white;">
+                          Sports
+                      </font>
+                  </label>
+                  <br>
+                  <label for="html">
+                      <input type="radio" id="debates" name="skill" value="debates" style="margin-left: 17px;">
+                      <font size="3" style="margin-left: 8px; color:white;">
+                          Debates
+                      </font>
+                  </label>
+                  <br>
+                  <label for="html">
+                      <input type="radio" id="others" name="skill" value="others" style="margin-left: 17px;">
+                      <font size="3" style="margin-left: 8px; color:white;">
+                          Others
+                      </font>
+                  </label>
+
+
+                  
+              </form>
+              <button type="submit" form="send"  style="margin-left: 490px; width:80px; height:40px">
+                  <font size="4" style="font-weight: bold;">
+                    Send
                   </font>
-              </label>
-              <br>
-              <label for="html">
-                  <input type="radio" id="debates" name="skill" value="debates" style="margin-left: 17px;">
-                  <font size="3" style="margin-left: 8px; color:white;">
-                      Debates
-                  </font>
-              </label>
-              <br>
-              <label for="html">
-                  <input type="radio" id="others" name="skill" value="others" style="margin-left: 17px;">
-                  <font size="3" style="margin-left: 8px; color:white;">
-                      Others
-                  </font>
-              </label>
-             
-              
-              <div class="b_button">
-                  <font size="3" style=" color:black;">
-                      Send
-                  </font>
-              </div>
+              </button>
           </p>
       </div>
       
@@ -576,19 +579,19 @@
                        <img src="{% static 'image/notification.png' %}"  style="width: 30px">
                        <span style="margin-right: 1em;margin-: 10em"></span>
                         <div class="t_dropdown1-content" style="  right:0;">
-                            <a href="">
+                            <a href="notification.html">
                                 <font size="4" style="font-weight: bold">28 min ago
                                 </font>
                                 <br>
                                 Hall Sports tournament certificate request has been approved
                             </a>
-                            <a href="">
+                            <a href="notification.html">
                                 <font size="4" style="font-weight: bold">One hour ago
                                 </font>
                                 <br>
                                 You have to pay hall fees
                             </a>
-                            <a href="">
+                            <a href="notification.html">
                                 <font size="4" style="font-weight: bold">One day ago
                                 </font>
                                 <br>
@@ -599,8 +602,7 @@
                   </div>
        
         
-        <font size="4" style="margin-left: 920px; color:white; font-weight: bold">Log Out</font>
-        <font size="4" style="margin-left: 20px; color:white; font-weight: bold">Register</font>
+        <font size="4" style="margin-left: 1000px; color:white; font-weight: bold">Log Out</font>
         </p>
    </div>
 </body>

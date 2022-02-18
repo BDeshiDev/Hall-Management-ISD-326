@@ -5,9 +5,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Sidebar Menu Example</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <title>Log In</title>
     
     <style>
             body{   
@@ -455,24 +453,28 @@
       
       <div class="anotherBg_box">
           <p>
-             <br>
-             <font size="4" style="margin-left: 350px; color:white; font-weight: bold;">User ID</font>
-             <font size="4" style="margin-left: 37px; color: white">
-             <input type="text" name="place" placeholder="Enter User ID" size="15px 10px" maxlength="25" id="room_no" >
-             </font>
-              
-             <br><br>
-             <font size="4" style="margin-left: 350px; color:white; font-weight: bold;">Password</font>
-             <font size="4" style="margin-left: 15px; color: white">
-             <input type="text" name="place" placeholder="Enter Passowrd" size="15px 10px" maxlength="25" id="room_no" >
-             </font>
-              
-              <br><br>
-              <div class="b_button">
-                  <font size="3" style=" color:black;">
-                      Log In
+             <form action="notification.html" id="login">
+                 <br>
+                 <font size="4" style="margin-left: 350px; color:white; font-weight: bold;">User ID</font>
+                 <font size="4" style="margin-left: 37px; color: white">
+                 <input type="text" name="place" placeholder="Enter User ID" size="15px 10px" maxlength="25" id="room_no" >
+                 </font>
+
+                 <br><br>
+                 <font size="4" style="margin-left: 350px; color:white; font-weight: bold;">Password</font>
+                 <font size="4" style="margin-left: 15px; color: white">
+                 <input type="text" name="place" placeholder="Enter Passowrd" size="15px 10px" maxlength="25" id="room_no" >
+                 </font>
+
+                  <br><br>
+                  
+              </form>
+              <button type="submit" form="login"  style="margin-left: 490px; width:80px; height:40px">
+                  <font size="4" style="font-weight: bold;">
+                    Log In
                   </font>
-              </div>
+              </button>
+
           </p>
       </div>
       
@@ -498,9 +500,8 @@
     
         
         <a href="/login">
-            <font size="4" style="margin-left: 920px; color:white; font-weight: bold">Log In</font>
+            <font size="4" style="margin-left: 1000px; color:white; font-weight: bold">Log In</font>
         </a>
-        <font size="4" style="margin-left: 20px; color:white; font-weight: bold">Register</font>
         </p>
    </div>
 </body>

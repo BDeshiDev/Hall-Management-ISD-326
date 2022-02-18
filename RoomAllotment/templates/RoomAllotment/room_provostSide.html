@@ -264,7 +264,7 @@
                 position: absolute;
                 background-color: white;
                 top:22%;
-                left: 81%;
+                left: 85%;
                 width:25px;
                 height: 25px;
             }
@@ -272,7 +272,7 @@
                 position: absolute;
                 background-color: white;
                 top:22%;
-                left: 84%;
+                left: 88%;
                 width:25px;
                 height: 25px;
             }
@@ -598,26 +598,31 @@
               
           
              <br><br><br><br><br><br><br><br><br><br><br><br><br>
-             <font size="4" style="margin-left: 17px; color:white; font-weight: bold;">
-                 Student ID
-             </font>
-             <font size="4" style="margin-left: 15px; color: white">
-             <input type="text" name="student_id" placeholder="Enter Student ID" size="15px 10px" maxlength="25" id="student_id" >
-             </font>
-             
-             <font size="4" style="margin-left: 150px; color:white; font-weight: bold;">
-                 Room No
-             </font>
-             <font size="4" style="margin-left: 15px; color: white">
-             <input type="text" name="room_no" placeholder="Enter Room No" size="15px 10px" maxlength="25" id="room_no" >
-             </font>
           
-             <br><br>
-              <div class="b_button">
-                  <font size="3" style=" color:black;">
-                      Send
+             <form action="notification.html" id="send">
+                 <font size="4" style="margin-left: 17px; color:white; font-weight: bold;">
+                     Student ID
+                 </font>
+                 <font size="4" style="margin-left: 15px; color: white">
+                 <input type="text" name="student_id" placeholder="Enter Student ID" size="15px 10px" maxlength="25" id="student_id" >
+                 </font>
+
+                 <font size="4" style="margin-left: 150px; color:white; font-weight: bold;">
+                     Room No
+                 </font>
+                 <font size="4" style="margin-left: 15px; color: white">
+                 <input type="text" name="room_no" placeholder="Enter Room No" size="15px 10px" maxlength="25" id="room_no" >
+                 </font>
+
+                 <br><br>
+                  
+              </form>
+          
+              <button type="submit" form="send"  style="margin-left: 390px; width:80px; height:40px">
+                  <font size="4" style="font-weight: bold;">
+                    Send
                   </font>
-              </div>
+              </button>
           </p>
       </div>
       
@@ -649,19 +654,19 @@
                        <img src="{% static 'image/notification.png' %}"  style="width: 30px">
                        <span style="margin-right: 1em;margin-: 10em"></span>
                         <div class="t_dropdown1-content" style="  right:0;">
-                            <a href="">
+                            <a href="notification.html">
                                 <font size="4" style="font-weight: bold">28 min ago
                                 </font>
                                 <br>
                                 Hall Sports tournament certificate request has been approved
                             </a>
-                            <a href="">
+                            <a href="notification.html">
                                 <font size="4" style="font-weight: bold">One hour ago
                                 </font>
                                 <br>
                                 You have to pay hall fees
                             </a>
-                            <a href="">
+                            <a href="notification.html">
                                 <font size="4" style="font-weight: bold">One day ago
                                 </font>
                                 <br>
@@ -672,8 +677,7 @@
                   </div>
        
         
-        <font size="4" style="margin-left: 920px; color:white; font-weight: bold">Log Out</font>
-        <font size="4" style="margin-left: 20px; color:white; font-weight: bold">Register</font>
+        <font size="4" style="margin-left: 1000px; color:white; font-weight: bold">Log Out</font>
         </p>
    </div>
 </body>
