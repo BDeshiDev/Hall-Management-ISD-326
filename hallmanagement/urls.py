@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from RoomAllotment.views import login, logout, home
 
 urlpatterns = [
     #path('RoomAllotment/', include('RoomAllotment.urls')),
