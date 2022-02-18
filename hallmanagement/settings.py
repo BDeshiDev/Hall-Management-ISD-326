@@ -104,6 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

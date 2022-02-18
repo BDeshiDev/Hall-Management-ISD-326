@@ -1,3 +1,4 @@
+{# may need to make a different base for login as that should n't show nav bar #}
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,6 +9,11 @@
 <body>
   <div class="container">
     {% block content %}
+        {% if user.is_provost %}
+            <p>provost</p>
+        {% else %}
+            <p>student</p>
+        {% endif %}
     {% endblock %}
   </div>
 </body>

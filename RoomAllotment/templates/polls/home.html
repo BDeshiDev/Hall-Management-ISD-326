@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if is_provost %}
+        provost
+    {% else %}
+        student
+    {% endif %}
+    <a href="{% url 'logout' %}">
+         <button type="submit" class="btn btn-primary"> logout </button>
+    </a>
+
+{% endblock %}

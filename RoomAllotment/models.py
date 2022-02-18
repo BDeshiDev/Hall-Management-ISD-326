@@ -24,6 +24,17 @@ class Student(models.Model):
     roomNo = models.ForeignKey(Room, null=True, blank=True, on_delete=models.CASCADE)
     
 
+    # not sure if normal fields are okay in models
+    # seems kinda pointless to store these in DB, hence functions
+    # mainly for ease of use after get_user() is used.
+    @staticmethod
+    def is_provost():
+        return False
+
+    @staticmethod
+    def is_student():
+        return True
+
 
 class RoomAllotmentRequest(models.Model):
     RequestID = models.AutoField(primary_key=True)
@@ -60,6 +71,17 @@ class Provost(models.Model):
     post = models.CharField(max_length=100,default="Professor") 
     start_timestamp = models.DateTimeField(default=timezone.now)
     end_timestamp = models.DateTimeField(null=True)
+
+    # not sure if normal fields are okay in models
+    # seems kinda pointless to store these in DB, hence functions
+    # mainly for ease of use after get_user() is used.
+    @staticmethod
+    def is_provost():
+        return True
+
+    @staticmethod
+    def is_student():
+        return False
 
 
 class Notification(models.Model):
