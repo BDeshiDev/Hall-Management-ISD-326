@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,8 +7,6 @@
   <title>Sidebar Menu Example</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-  <link rel="stylesheet" href="./dist/sidebar-menu.css">
-    
     
     <style>
             body{   
@@ -58,7 +57,7 @@
                 position: absolute;
                 left: 100%;
                 background-color: whitesmoke;
-                min-width: 210px;
+                min-width: 310px;
                 box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
                 z-index: 1;
             }
@@ -375,7 +374,7 @@
                 background-color: #4a7f8f;
                 top:68%;
                 left: 50%;
-                width:275px;
+                width:610px;
                 height: 42px;
             }
            .info_box8{
@@ -407,7 +406,7 @@
                 background-color: #4a7f8f;
                 top:91%;
                 left: 50%;
-                width:610px;
+                width:275px;
                 height: 42px;
             }
         </style>
@@ -428,50 +427,59 @@
               </div>
               <div class="mini_box2">
                   <p></p>
-                   <div class="text_h">Dues Status</div>
+                   <div class="text_h">See Fund Requests</div>
               </div>
               <div class="mini_box3">
                   <p></p>
-                   <div class="text_h">Dining Status</div>
+                   <div class="text_h">See Defaulter List</div>
               </div>
               <div class="mini_box4">
                   <p></p>
-                   <div class="text_h">Request Services</div>
+                   <div class="text_h">See Complains</div>
               </div>
               <div class="mini_box5">
                   <p></p>
                   <div class="t_dropdown">
-                   <div class="text_h">Applications >
+                   <div class="text_h">
+                       Applications
                        <span style="margin-right: 1em;margin-: 10em"></span>
                         <div class="t_dropdown-content" style="top:0;  right:0;">
-                            <a href="room.html">Room Exchange</a>
-                            <a href="">Certificate</a>
-                            <a href="">Others</a>
+                            <a href="">Applications for Certificates</a>
+                            <a href="{{request.path}}/room-allot">Applications for Room Allotment</a>
+                            <a href="">Applications for Others</a>
                         </div>
                    </div>
                   </div>
               </div>
               <div class="mini_box6">
                   <p></p>
-                   <div class="text_h">Notices</div>
+                   <div class="text_h">Pay Staff Salary</div>
               </div>
               <div class="mini_box7">
                   <p></p>
-                   <div class="text_h">Complain</div>
+                   <div class="text_h">See Student Profile</div>
               </div>
               <div class="mini_box8">
                   <p></p>
-                   <div class="text_h">Change Password</div>
+                   <div class="text_h">See Room Info</div>
+              </div>
+              <div class="mini_box9">
+                  <p></p>
+                   <div class="text_h">fees</div>
+              </div>
+              <div class="mini_box10">
+                  <p></p>
+                   <div class="text_h">Notices</div>
               </div>
           </div>
       </div>
          <p>
                     <br><br><br><br><br><br><br>
-                    <font size="6" style="margin-left: 350px; color:white; font-weight: bold">Rachel Cooper</font>
+                    <font size="6" style="margin-left: 350px; color:white; font-weight: bold">Ivana Patel</font>
                     
                     
-      <             <div class="image_box2">
-                        <img src="image/rachel.jpg"  style="width: 100px">
+                    <div class="image_box2">
+                        <img src="{% static 'image/provost.jpg' %}"  style="width: 100px">
                     </div>
                   
            
@@ -480,22 +488,22 @@
                     <br>
                     <div class="info_box1">
                     <p></p>
-                    <font size="4" style="margin-left: 5px; color:white; ">Rachel</font>
+                    <font size="4" style="margin-left: 5px; color:white; ">Ivana</font>
                     </div>
                     <div class="info_box2">
                     <p></p>
-                    <font size="4" style="margin-left: 5px; color:white; ">Cooper</font>
+                    <font size="4" style="margin-left: 5px; color:white; ">Patel</font>
                     </div>
     
                     <br><br><br>
                   
            
-                    <font size="4" style="margin-left: 758px; color:white; font-weight: bold">Student ID :</font>
-                    <font size="4" style="margin-left: 228px; color:white; font-weight: bold">Department :</font>
+                    <font size="4" style="margin-left: 758px; color:white; font-weight: bold">Post :</font>
+                    <font size="4" style="margin-left: 280px; color:white; font-weight: bold">Department :</font>
                     <br>
                     <div class="info_box3">
                     <p></p>
-                    <font size="4" style="margin-left: 5px; color:white; ">1901008</font>
+                    <font size="4" style="margin-left: 5px; color:white; ">Professor</font>
                     </div>
                     <div class="info_box4">
                     <p></p>
@@ -505,54 +513,20 @@
                     <br><br><br>
                   
            
-                    <font size="4" style="margin-left: 758px; color:white; font-weight: bold">Level :</font>
-                    <font size="4" style="margin-left: 275px; color:white; font-weight: bold">Term :</font>
+                    <font size="4" style="margin-left: 758px; color:white; font-weight: bold">Mobile :</font>
                     <br>
                     <div class="info_box5">
                     <p></p>
                     <font size="4" style="margin-left: 5px; color:white; ">2</font>
                     </div>
-                    <div class="info_box6">
-                    <p></p>
-                    <font size="4" style="margin-left: 5px; color:white; ">1</font>
-                    </div>
                     
                     <br><br><br>
                   
-           
-                    <font size="4" style="margin-left: 758px; color:white; font-weight: bold">Present Address :</font>
-                    <font size="4" style="margin-left: 180px; color:white; font-weight: bold">Permanent Address :</font>
-                    <br>
-                    <div class="info_box7">
-                    <p></p>
-                    <font size="4" style="margin-left: 5px; color:white; ">Fairfax,Virginia</font>
-                    </div>
-                    <div class="info_box8">
-                    <p></p>
-                    <font size="4" style="margin-left: 5px; color:white; ">Fairfax,Virginia</font>
-                    </div>
-    
-                    <br><br><br>
-                  
-           
-                    <font size="4" style="margin-left: 758px; color:white; font-weight: bold">Mobile No :</font>
-                    <font size="4" style="margin-left: 232px; color:white; font-weight: bold">Room No :</font>
-                    <br>
-                    <div class="info_box9">
-                    <p></p>
-                    <font size="4" style="margin-left: 5px; color:white; ">01XXXXXXXXX</font>
-                    </div>
-                    <div class="info_box10">
-                    <p></p>
-                    <font size="4" style="margin-left: 5px; color:white; ">416</font>
-                    </div>
-    
-                    <br><br><br>
                   
            
                     <font size="4" style="margin-left: 758px; color:white; font-weight: bold">Email :</font>
                     <br>
-                    <div class="info_box11">
+                    <div class="info_box7">
                     <p></p>
                     <font size="4" style="margin-left: 5px; color:white; ">rachel.09@gmail.com</font>
                     </div>
@@ -564,25 +538,26 @@
     <div class="opacity_box1">
         <p>
         <div class="image_box1">
-            <img src="image/home.png"  style="width: 30px">
+            <img src="{% static 'image/home.png' %}"  style="width: 30px">
         </div>
         <br>
         
-        <a href="home_page.html">
+        <a href="/">
             <font size="4" style="margin-left: 80px; color:white; font-weight: bold">
                 Home
             </font>
         </a>  
+        
         <font size="4" style="margin-left: 20px; color:white; font-weight: bold">Instructions</font>
         <font size="4" style="margin-left: 20px; color:white; font-weight: bold">User Manual</font>
         
         <div class="image_box3">
-            <img src="image/rachel.jpg"  style="width: 30px">
+            <img src="{% static 'image/provost.jpg' %}"  style="width: 30px">
         </div>
         <div class="image_box4">
         <div class="t_dropdown1">
                    
-                       <img src="image/notification.png"  style="width: 30px">
+                       <img src="{% static 'image/notification.png' %}"  style="width: 30px">
                        <span style="margin-right: 1em;margin-: 10em"></span>
                         <div class="t_dropdown1-content" style="  right:0;">
                             <a href="">

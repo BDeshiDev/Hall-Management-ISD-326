@@ -16,54 +16,55 @@ class HomeView(View):
 class StudentHomeView(View):
     def get(self, request, *args, **kwargs):
         std_id = kwargs['std_id']
-        return HttpResponse(f'Studnet home view {std_id}')
+        return render(request, 'RoomAllotment/student_profile.html')
 
 class ProvostHomeView(View):
     def get(self, request, *args, **kwargs):
         prv_id = kwargs['prv_id']
-        return HttpResponse(f'provost home view {prv_id}')
+        return render(request, 'RoomAllotment/provost_profile.html')
 
 class LoginView(View):
     def get(self, request, *args, **kwargs):
-        if request.method == 'POST':
-            # create a form instance and populate it with data from the request:
-            form = LoginForm(request.POST)
-            # check whether it's valid:
-            if form.is_valid():
-                form.clean()
-                print("login form: " + str(form.cleaned_data))
+        return render(request, 'RoomAllotment/login.html')
+        #if request.method == 'POST':
+        #    # create a form instance and populate it with data from the request:
+        #    form = LoginForm(request.POST)
+        #    # check whether it's valid:
+        #    if form.is_valid():
+        #        form.clean()
+        #        print("login form: " + str(form.cleaned_data))
 
-                user_identifier = form.cleaned_data['userIdentifier']
-                password = form.cleaned_data['password']
+        #        user_identifier = form.cleaned_data['userIdentifier']
+        #        password = form.cleaned_data['password']
 
-                try:
-                    student_id = int(user_identifier)
-                    if login_user_student(request, student_id, password):
-                        print("student login", get_user(request))
+        #        try:
+        #            student_id = int(user_identifier)
+        #            if login_user_student(request, student_id, password):
+        #                print("student login", get_user(request))
 
-                        return HttpResponseRedirect(reverse('student-home'))
-                    else:
-                        print("student login fail but userID is integer", form.cleaned_data)
-                        return HttpResponse("provost login fail")
-                except ValueError:
-                    # assume that this is provost login since userID != int
-                    if login_user_provost(request, user_identifier, password):
-                        print("provost login", get_user(request))
-                        return HttpResponseRedirect(reverse('student-home'))
-                    else:
-                        print("provost login fail", form.cleaned_data)
-                        return HttpResponse("provost login fail")
-            else:
-                print("form fail")
-                print(form.errors)
-                return HttpResponse(form.errors)
-        else:
-            form = LoginForm()
-            context = {'form': form}
-            return render(request, 'RoomAllotment/login.html', context)
+        #                return HttpResponseRedirect(reverse('student-home'))
+        #            else:
+        #                print("student login fail but userID is integer", form.cleaned_data)
+        #                return HttpResponse("provost login fail")
+        #        except ValueError:
+        #            # assume that this is provost login since userID != int
+        #            if login_user_provost(request, user_identifier, password):
+        #                print("provost login", get_user(request))
+        #                return HttpResponseRedirect(reverse('student-home'))
+        #            else:
+        #                print("provost login fail", form.cleaned_data)
+        #                return HttpResponse("provost login fail")
+        #    else:
+        #        print("form fail")
+        #        print(form.errors)
+        #        return HttpResponse(form.errors)
+        #else:
+        #    form = LoginForm()
+        #    context = {'form': form}
+        #    return render(request, 'RoomAllotment/login.html', context)
 
 
-class logoutView(View):
+class LogoutView(View):
     def get(self, request, *args, **kwargs):
         log_out(request)
         return HttpResponseRedirect(reverse('login'))
@@ -72,12 +73,13 @@ class logoutView(View):
 class StudentRoomReqView(View):
     def get(self, request, *args, **kwargs):
         std_id = kwargs['std_id']
-        return HttpResponse(f'student room request view {std_id}')
+        return render(request, 'RoomAllotment/room.html');
 
 class ProvostRoomAllotView(View):
     def get(self, request, *args, **kwargs):
         prv_id = kwargs['prv_id']
-        return HttpResponse(f'provost room allotment view {prv_id}' )
+        return render(request, 'RoomAllotment/room_provostSide.html')
+
 
 def view_requests(request):
     requests = RoomAllotmentRequest.objects.all()

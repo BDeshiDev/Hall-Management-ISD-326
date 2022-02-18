@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,8 +8,6 @@
   <title>Sidebar Menu Example</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-  <link rel="stylesheet" href="./dist/sidebar-menu.css">
-    
     
     <style>
             body{   
@@ -483,11 +483,11 @@
     <div class="opacity_box1">
         <p>
         <div class="image_box1">
-            <img src="image/home.png"  style="width: 30px">
+            <img src="{% static 'image/home.png' %}"  style="width: 30px">
         </div>
         <br>
         
-        <a href="home_page.html">
+        <a href="/">
             <font size="4" style="margin-left: 80px; color:white; font-weight: bold">
                 Home
             </font>
@@ -497,7 +497,7 @@
         
     
         
-        <a href="login.html">
+        <a href="/login">
             <font size="4" style="margin-left: 920px; color:white; font-weight: bold">Log In</font>
         </a>
         <font size="4" style="margin-left: 20px; color:white; font-weight: bold">Register</font>

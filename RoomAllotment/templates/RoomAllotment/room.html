@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,8 +7,6 @@
   <title>Sidebar Menu Example</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-  <link rel="stylesheet" href="./dist/sidebar-menu.css">
-    
     
     <style>
             body{   
@@ -470,7 +469,7 @@
                    <div class="text_h">Applications 
                        <span style="margin-right: 1em;margin-: 10em"></span>
                         <div class="t_dropdown-content" style="top:0;  right:0;">
-                            <a href="">Room Exchange</a>
+                            <a href="{{request.path}}">Room Exchange</a>
                             <a href="">Certificate</a>
                             <a href="">Others</a>
                         </div>
@@ -556,11 +555,11 @@
     <div class="opacity_box1">
         <p>
         <div class="image_box1">
-            <img src="image/home.png"  style="width: 30px">
+            <img src="{% static 'image/home.png' %}"  style="width: 30px">
         </div>
         <br>
         
-        <a href="home_page.html">
+        <a href="/">
             <font size="4" style="margin-left: 80px; color:white; font-weight: bold">
                 Home
             </font>
@@ -569,12 +568,12 @@
         <font size="4" style="margin-left: 20px; color:white; font-weight: bold">User Manual</font>
         
         <div class="image_box3">
-            <img src="image/rachel.jpg"  style="width: 30px">
+            <img src="{% static 'image/rachel.jpg' %}"  style="width: 30px">
         </div>
         <div class="image_box4">
         <div class="t_dropdown1">
                    
-                       <img src="image/notification.png"  style="width: 30px">
+                       <img src="{% static 'image/notification.png' %}"  style="width: 30px">
                        <span style="margin-right: 1em;margin-: 10em"></span>
                         <div class="t_dropdown1-content" style="  right:0;">
                             <a href="">
