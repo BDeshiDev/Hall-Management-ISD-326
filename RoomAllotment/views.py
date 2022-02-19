@@ -12,13 +12,28 @@ class HomeView(View):
     def get(self, request, *args, **kwargs):
         #for key, value in request.session.items():
         #    print('{} => {}'.format(key, value))
-        return render(request, 'RoomAllotment/home_page.html')
+        
+        context = {"loggedIn": is_logged_in(request) }
+        if context["loggedIn"]:
+            fill_context(request, context)
+            user = context["user"]
+            context["profileUrl"] = f'student/{user.stdID}' if user.is_student() else f'provost/{user.provostID}'
+        return render(request, 'RoomAllotment/home_page.html', context)
+                                                    
 
 class StudentHomeView(View):
-    # TODO check if logged in
     def get(self, request, *args, **kwargs):
         std_id = kwargs['std_id']
-        return render(request, 'RoomAllotment/student_profile.html')
+        context = {"loggedIn": is_logged_in(request)}
+        
+        if context["loggedIn"]:
+            fill_context(request, context)
+            if (not context["is_student"]) or (context["user"].stdID != std_id):
+                return Http404("Not logged in")
+            
+            return render(request, 'RoomAllotment/student_profile.html', context)
+        else:
+            return Http404("Not Logged in")
 
 class ProvostHomeView(View):
     # TODO check if logged in
@@ -31,11 +46,15 @@ class ProvostHomeView(View):
         return Http404("You are not logged in.")
 
 class LoginView(View):
-    # TODO check if logged in
     def get(self, request, *args, **kwargs):
+        if is_logged_in(request):
+            return Http404("already logged in")
         return render(request, 'RoomAllotment/login.html')
 
     def post(self, request, *args, **kwargs):
+        if is_logged_in(request):
+            return Http404("already logged in")
+
         form = LoginForm(request.POST)
         if form.is_valid():
             form.clean()
@@ -64,8 +83,10 @@ class LoginView(View):
             return HttpResponse(form.errors)
 
 class LogoutView(View):
-    # TODO check if logged in
     def get(self, request, *args, **kwargs):
+        if not is_logged_in(request):
+            return Http404("not logged in")
+
         log_out(request)
         return HttpResponseRedirect(reverse('login'))
 
