@@ -17,6 +17,7 @@ def fill_context(request, context):
     student_id = request.session.get("student_id", None)
     if student_id:
         context["user"] = Student.objects.get(pk=student_id)
+        context["notifications"] = Notification.objects.filter(studentID=student_id)
         context["is_student"] = True
         context["is_provost"] = False
     else:

@@ -97,6 +97,3 @@ class Notification(models.Model):
     def isSeen(self):
         self.seen=True
         self.save()
-
-    def getURL(self):
-        return self.notifURL

@@ -583,24 +583,20 @@
                        <img src="{% static 'image/notification.png' %}"  style="width: 30px">
                        <span style="margin-right: 1em;margin-: 10em"></span>
                         <div class="t_dropdown1-content" style="  right:0;">
-                            <a href="notification.html">
-                                <font size="4" style="font-weight: bold">28 min ago
-                                </font>
-                                <br>
-                                Hall Sports tournament certificate request has been approved
-                            </a>
-                            <a href="notification.html">
-                                <font size="4" style="font-weight: bold">One hour ago
-                                </font>
-                                <br>
-                                You have to pay hall fees
-                            </a>
-                            <a href="notification.html">
-                                <font size="4" style="font-weight: bold">One day ago
-                                </font>
-                                <br>
-                                Hall debate tournament certificate request has been approved
-                            </a>
+                            {% for notification in notifications %}
+                                <a href="{% url 'notification' id=user.pk notifid=notification.notifID %}">
+                                    <font size="4" style="font-weight: bold">{{notification.timestamp}}
+                                    </font>
+                                    <br>
+                                    {{notification.title}}
+                                    <br>
+                                    {% if notification.seen %}
+                                        Seen
+                                    {% else %}
+                                        Unseen
+                                    {% endif %}
+                                </a>                           
+                            {% endfor %}
                         </div>
                    </div>
                   </div>

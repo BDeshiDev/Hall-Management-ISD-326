@@ -83,4 +83,5 @@ class NotificationView(View):
         notif_id = kwargs['notifid']
         notification = Notification.objects.get(pk=notif_id)
         notification.isSeen()
-        return HttpResponseRedirect(reverse(notification.getURL(), args=[std_id]))
+        print(notification.notifURL,"--------------",notification.title)
+        return HttpResponseRedirect(reverse(notification.notifURL, args=[std_id]))
