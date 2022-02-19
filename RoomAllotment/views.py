@@ -151,6 +151,22 @@ class ProvostRoomAllotView(View):
             applications = RoomAllotmentRequest.objects.all()
             return render(request, 'RoomAllotment/room_provostSide.html',{"Requests":applications})
         return Http404("You are not logged in.")
+
+class NotificationView(View):
+    # TODO check if logged in
+    def get(self, request, *args, **kwargs):
+        std_id = kwargs['id']
+        notif_id = kwargs['notifid']
+        notification = Notification.objects.get(pk=notif_id)
+        notification.isSeen()
+        return HttpResponseRedirect(reverse(notification.getURL(), args=[std_id]))
+
+
+def view_requests(request):
+    requests = RoomAllotmentRequest.objects.all()
+    context = {'requests': requests}
+    return render(request, 'polls/View-Requests.html', context)
+
         
 
 def request_form(request):
