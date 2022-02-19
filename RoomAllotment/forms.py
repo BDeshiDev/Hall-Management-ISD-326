@@ -12,7 +12,4 @@ class LoginForm(forms.Form):
 class RoomAllotmentRequestForm(ModelForm):
     class Meta:
         model = RoomAllotmentRequest
-        exclude = ['RequestID']
-
-
-
+        fields = ["requestedRoomNo", "attachment", "message", "sports", "debate", "other_skill"]
