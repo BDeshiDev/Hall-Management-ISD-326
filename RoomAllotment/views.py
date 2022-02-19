@@ -24,7 +24,11 @@ class ProvostHomeView(View):
     # TODO check if logged in
     def get(self, request, *args, **kwargs):
         prv_id = kwargs['prv_id']
-        return render(request, 'RoomAllotment/provost_profile.html')
+        if get_user(request):
+            context = {}
+            fill_context(request, context)
+            return render(request, 'RoomAllotment/provost_profile.html',context)
+        return Http404("You are not logged in.")
 
 class LoginView(View):
     # TODO check if logged in
@@ -70,13 +74,16 @@ class StudentRoomReqView(View):
     # TODO check if logged in
     def get(self, request, *args, **kwargs):
         std_id = kwargs['std_id']
-        return render(request, 'RoomAllotment/room.html');
+        return render(request, 'RoomAllotment/room.html')
 
 class ProvostRoomAllotView(View):
     # TODO check if logged in
     def get(self, request, *args, **kwargs):
         prv_id = kwargs['prv_id']
-        return render(request, 'RoomAllotment/room_provostSide.html')
+        if get_user(request):
+            applications = RoomAllotmentRequest.objects.all()
+            return render(request, 'RoomAllotment/room_provostSide.html',{"Requests":applications})
+        return Http404("You are not logged in.")
 
 
 def view_requests(request):
