@@ -453,17 +453,18 @@
       
       <div class="anotherBg_box">
           <p>
-             <form action="notification.html" id="login">
+             <form action="{{request.path}}" id="login" method="POST">
+                 {% csrf_token %}
                  <br>
                  <font size="4" style="margin-left: 350px; color:white; font-weight: bold;">User ID</font>
                  <font size="4" style="margin-left: 37px; color: white">
-                 <input type="text" name="place" placeholder="Enter User ID" size="15px 10px" maxlength="25" id="room_no" >
+                 <input type="text" name="userIdentifier" placeholder="Enter User ID" size="15px 10px" maxlength="25" id="userIdentifier" >
                  </font>
 
                  <br><br>
                  <font size="4" style="margin-left: 350px; color:white; font-weight: bold;">Password</font>
                  <font size="4" style="margin-left: 15px; color: white">
-                 <input type="text" name="place" placeholder="Enter Passowrd" size="15px 10px" maxlength="25" id="room_no" >
+                 <input type="password" name="password" placeholder="Enter Passowrd" size="15px 10px" maxlength="25" id="password" >
                  </font>
 
                   <br><br>
