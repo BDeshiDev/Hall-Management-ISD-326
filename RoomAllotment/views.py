@@ -5,6 +5,8 @@ from .models import *
 from .forms import *
 from .AuthHelper import *
 from django.urls import reverse
+from django.db.models import F
+
 
 from django.views import View
 
@@ -101,13 +103,17 @@ class StudentRoomReqView(View):
             if (not context["is_student"]) or (context["user"].stdID != std_id):
                 return Http404("Not logged in")
 
-            # TODO get all free rooms and return them
+            rooms = Room.objects.filter(vacantSeats__gt = 0)
+            context["rooms"] = rooms
+            # TODO hook rooms
+
             return render(request, 'RoomAllotment/room.html', context)
         else:
             return Http404("Not Logged in")
 
 
     def post(self, request, *args, **kwargs):
+        # TODO validate room is empty?
         std_id = kwargs['std_id']
         context = {"loggedIn": is_logged_in(request)}
         
