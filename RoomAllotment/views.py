@@ -10,9 +10,6 @@ from django.views import View
 
 class HomeView(View):
     def get(self, request, *args, **kwargs):
-        #for key, value in request.session.items():
-        #    print('{} => {}'.format(key, value))
-        
         context = {"loggedIn": is_logged_in(request) }
         if context["loggedIn"]:
             fill_context(request, context)
@@ -35,8 +32,8 @@ class StudentHomeView(View):
         else:
             return Http404("Not Logged in")
 
+
 class ProvostHomeView(View):
-    # TODO check if logged in
     def get(self, request, *args, **kwargs):
         prv_id = kwargs['prv_id']
         if get_user(request):
@@ -44,6 +41,7 @@ class ProvostHomeView(View):
             fill_context(request, context)
             return render(request, 'RoomAllotment/provost_profile.html',context)
         return Http404("You are not logged in.")
+
 
 class LoginView(View):
     def get(self, request, *args, **kwargs):
@@ -82,6 +80,7 @@ class LoginView(View):
             print("form had errors")
             return HttpResponse(form.errors)
 
+
 class LogoutView(View):
     def get(self, request, *args, **kwargs):
         if not is_logged_in(request):
@@ -92,10 +91,51 @@ class LogoutView(View):
 
 
 class StudentRoomReqView(View):
-    # TODO check if logged in
     def get(self, request, *args, **kwargs):
+        
         std_id = kwargs['std_id']
-        return render(request, 'RoomAllotment/room.html')
+        context = {"loggedIn": is_logged_in(request)}
+        
+        if context["loggedIn"]:
+            fill_context(request, context)
+            if (not context["is_student"]) or (context["user"].stdID != std_id):
+                return Http404("Not logged in")
+
+            # TODO get all free rooms and return them
+            return render(request, 'RoomAllotment/room.html', context)
+        else:
+            return Http404("Not Logged in")
+
+
+    def post(self, request, *args, **kwargs):
+        std_id = kwargs['std_id']
+        context = {"loggedIn": is_logged_in(request)}
+        
+        if context["loggedIn"]:
+            fill_context(request, context)
+            if (not context["is_student"]) or (context["user"].stdID != std_id):
+                return Http404("Not logged in")
+
+            form = RoomAllotmentRequestForm(request.POST)
+
+            if form.is_valid():
+                form.stdID = std_id
+                print(form.cleaned_data)
+
+                room_request = form.save(commit=False)
+                room_request.stdID = context["user"]
+
+                room_request.save()
+
+            else:
+                print(form.errors)
+                return HttpResponseRedirect(reverse('student-room-req', args=[context["user"].stdID]))
+
+            return HttpResponseRedirect(reverse('student-home', args=[context["user"].stdID]))
+            
+        else:
+            return Http404("Not Logged in")
+
 
 class ProvostRoomAllotView(View):
     # TODO check if logged in
@@ -121,6 +161,7 @@ def view_requests(request):
     context = {'requests': requests}
     return render(request, 'polls/View-Requests.html', context)
 
+        
 
 def request_form(request):
     if request.method == 'POST':
@@ -144,18 +185,6 @@ def request_detail(request, request_id):
     except RoomAllotmentRequest.DoesNotExist:
         raise Http404("Request does not exist")
     return render(request, 'polls/Request-Detail.html', {'request': request})
-
-
-def home(request):
-    user = get_user(request)
-
-    if user:
-        context = {}
-        fill_context(request, context)
-        return render(request, 'polls/home.html', context)
-    else:
-        HttpResponseRedirect('/login')
-
 
 
 

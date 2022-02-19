@@ -494,25 +494,26 @@
       
       <div class="anotherBg_box">
           <p>
-              <form action="notification.html" id="send">
+              <form action="{{request.path}}" id="send" method="POST">
+                  {% csrf_token %}
                   
                   <font size="4" style="margin-left: 17px; color:white;">Preferred Room No(Optional)</font>
                   <font size="4" style="margin-left: 20px; color: white">
-                  <input type="text" name="room_no" placeholder="Enter room No" size="10px 10px" maxlength="20" id="room_no" >
+                  <input type="text" name="requestedRoomNo" placeholder="Enter room No" size="10px 10px" maxlength="20" id="room_no" >
                   </font>
 
                   <br>
                   <font size="4" style="margin-left: 17px; color:white;">Application</font>
                   <br>
                   <font size="4" style="margin-left: 17px; color: white">
-                  <textarea id="room_application" name="room_applocation" rows="8" cols="110">
+                  <textarea id="room_application" name="message" rows="8" cols="110">
           </textarea>
                   </font>
 
                   <br><br>
                   <font size="4" style="margin-left: 17px; color:white;">Attach documents</font>
                   <div class="attachment_box">
-                      <input type="file" id="attached_file" name="attached_file" multiple>
+                      <input type="file" id="attached_file" name="attachment" multiple>
                   </div>
 
                   <br><br>
@@ -520,21 +521,21 @@
                   <br>
 
                   <label for="html">
-                      <input type="radio" id="sports" name="skill" value="sports" style="margin-left: 17px;">
+                      <input type="checkbox" id="sports" name="sports" value="sports" style="margin-left: 17px;">
                       <font size="3" style="margin-left: 8px; color:white;">
                           Sports
                       </font>
                   </label>
                   <br>
                   <label for="html">
-                      <input type="radio" id="debates" name="skill" value="debates" style="margin-left: 17px;">
+                      <input type="checkbox" id="debates" name="debate" value="debates" style="margin-left: 17px;">
                       <font size="3" style="margin-left: 8px; color:white;">
                           Debates
                       </font>
                   </label>
                   <br>
                   <label for="html">
-                      <input type="radio" id="others" name="skill" value="others" style="margin-left: 17px;">
+                      <input type="checkbox" id="others" name="other-skills" value="others" style="margin-left: 17px;">
                       <font size="3" style="margin-left: 8px; color:white;">
                           Others
                       </font>
