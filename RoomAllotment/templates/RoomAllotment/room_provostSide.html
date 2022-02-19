@@ -585,8 +585,16 @@
                     </p>
                     <div class="selection_box">
                         {% for request in Requests %}
-                            <div class="selection_box_mini">RequestID: {{request.RequestID}}</div>
-                        {% endfor %}
+                            <div class="selection_box_mini">RequestID: {{request.RequestID}}  Status:
+                                {% if request.approvalStatus == 1 %}
+                                Pending
+                                {% elif request.approvalStatus == 2 %}
+                                Accepted
+                                {% elif request.approvalStatus == 3 %}
+                                Declined
+                                {% endif %}
+                            </div>
+                            {% endfor %}
                     </div>
                 </div>
               
