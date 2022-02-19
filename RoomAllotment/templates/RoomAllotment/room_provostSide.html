@@ -585,7 +585,7 @@
                     </p>
                     <div class="selection_box">
                         {% for request in Requests %}
-                            <div class="selection_box_mini">RequestID: {{request.RequestID}}  Status:
+                            <div class="selection_box_mini" onclick="location.href='{% url 'home' %}'">RequestID: {{request.RequestID}}  Status:
                                 {% if request.approvalStatus == 1 %}
                                 Pending
                                 {% elif request.approvalStatus == 2 %}

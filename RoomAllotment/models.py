@@ -91,3 +91,11 @@ class Notification(models.Model):
     title = models.CharField(max_length=200)
     details = models.CharField(max_length=200, null=True, blank=True)
     seen = models.BooleanField(default=False)
+    notifURL = models.CharField(max_length=200, null=True, blank=True)
+
+    def isSeen(self):
+        self.seen=True
+        self.save()
+
+    def getURL(self):
+        return self.notifURL
