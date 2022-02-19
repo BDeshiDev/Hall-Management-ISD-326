@@ -585,7 +585,7 @@
                     </p>
                     <div class="selection_box">
                         {% for request in Requests %}
-                            <div class="selection_box_mini" onclick="location.href='{% url 'home' %}'">RequestID: {{request.RequestID}}  Status:
+                            <div class="selection_box_mini" onclick="location.href='{% url 'home' %}'">Request by: {{request.stdID.stdID}},  Status:
                                 {% if request.approvalStatus == 1 %}
                                 Pending
                                 {% elif request.approvalStatus == 2 %}
@@ -601,7 +601,7 @@
           
              <br><br><br><br><br><br><br><br><br><br><br><br><br>
           
-             <form action="notification.html" id="send">
+             <form action="notification.html" id="send" method="post">
                  <font size="4" style="margin-left: 17px; color:white; font-weight: bold;">
                      Student ID
                  </font>
@@ -622,7 +622,7 @@
           
               <button type="submit" form="send"  style="margin-left: 390px; width:80px; height:40px">
                   <font size="4" style="font-weight: bold;">
-                    Send
+                      Assign
                   </font>
               </button>
           </p>
@@ -678,8 +678,7 @@
                    </div>
                   </div>
        
-        
-        <font size="4" style="margin-left: 1000px; color:white; font-weight: bold">Log Out</font>
+            <font size="4" style="margin-left: 1000px; color:white; font-weight: bold"><a href="{% url 'logout' %}">Log Out</a></font>
         </p>
    </div>
 </body>
