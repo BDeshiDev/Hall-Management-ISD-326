@@ -584,15 +584,9 @@
                         <font size="5" style="margin-left: 5px; color:white; font-weight: bold">Appplications</font>
                     </p>
                     <div class="selection_box">
-                        <div class="selection_box_mini">Application 1</div>
-                        <div class="selection_box_mini">Application 2</div>
-                        <div class="selection_box_mini">Application 3</div>
-                        <div class="selection_box_mini">Application 4</div>
-                        <div class="selection_box_mini">Application 5</div>
-                        <div class="selection_box_mini">Application 6</div>
-                        <div class="selection_box_mini">Application 7</div>
-                        <div class="selection_box_mini">Application 8</div>
-                        <div class="selection_box_mini">Application 9</div>
+                        {% for request in Requests %}
+                            <div class="selection_box_mini">RequestID: {{request.RequestID}}</div>
+                        {% endfor %}
                     </div>
                 </div>
               
