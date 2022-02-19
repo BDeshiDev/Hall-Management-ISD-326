@@ -38,8 +38,8 @@ class Student(models.Model):
 
 class RoomAllotmentRequest(models.Model):
     RequestID = models.AutoField(primary_key=True)
-    stdID = models.ForeignKey(Student, on_delete=models.CASCADE,null=True, blank=True)
-    requestedRoomNo = models.ForeignKey(Room, on_delete=models.CASCADE)
+    stdID = models.ForeignKey(Student, on_delete=models.CASCADE)
+    requestedRoomNo = models.ForeignKey(Room, on_delete=models.CASCADE,null=True, blank=True)
     attachment = models.FileField(null=True, blank=True)
     message = models.CharField(max_length=200, null=True, blank=True)
     sports = models.BooleanField(default=False)
