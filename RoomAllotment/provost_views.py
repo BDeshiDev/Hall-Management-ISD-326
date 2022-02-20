@@ -5,6 +5,7 @@ from django.shortcuts import render
 from .models import *
 from .forms import *
 from .AuthHelper import *
+from .room_suggestion import *
 from django.urls import reverse
 from django.db.models import F
 from django.views import View
@@ -63,61 +64,43 @@ class ProvostRoomAllotView(View):
             if not context["is_provost"]:
                 return Http404("Not logged in")
 
-            
+            form = RoomAllotForm(request.POST)
+            if form.is_valid():
+                form.clean()
+                student_id = form.cleaned_data['student_id']
+                room_no = form.cleaned_data['room_no']
 
+
+                student = Student.objects.get(pk=student_id)
+                old_room = student.roomNo
+
+                application = RoomAllotmentRequest.objects.filter(stdID__exact = student)[0]
+                print(application)
+
+                if room_no is None:
+                    application.approvalStatus = RoomAllotmentRequest.DECLINED
+                    application.save()
+                else:
+                    room = Room.objects.get(pk=room_no)
+
+                    if old_room is not None:
+                        old_room.vacantSeats += 1
+                    
+                    student.roomNo = room
+                    room.vacantSeats -= 1
+                    application.approvalStatus = RoomAllotmentRequest.ACCEPTED 
+
+                    student.save()
+                    room.save()
+                    if old_room is not None:
+                        old_room.save()
+                    application.save()
+
+                return HttpResponseRedirect(reverse('provost-room-allot', args=[prv_id]))
+            else:
+                print(form.errors)
+                return Http404("wrong form")
         else:
             return Http404("Not logged in")
 
 
-
-
-def assignRoomsBySeniority(applications, rooms):
-    applications = sorted(applications, key = lambda a : (a.stdID.level, a.stdID.term, -a.RequestID))
-    applications = reversed(applications)
-    applications = list(applications)
-    assignRooms(applications, rooms)
-    return applications 
-
-def assignRoomsByCgpa(applications, rooms):
-    applications = sorted(applications, key = lambda a : (a.stdID.cgpa, -a.RequestID))
-    applications = reversed(applications)
-    applications = list(applications)
-    assignRooms(applications, rooms)
-    return applications
-
-def assignRoomsByAddress(applications, rooms):
-    applications = sorted(applications, key = lambda a : (1 if a.stdID.present_address != 'Dhaka' and a.stdID.permanent_address != 'Dhaka' else 0, -a.RequestID))
-    applications = reversed(applications)
-    applications = list(applications)
-    assignRooms(applications, rooms)
-    return applications
-
-def assignRoomsByEca(applications, rooms):
-    applications = sorted(applications, key = lambda a : (int(a.debate) + int(a.sports) + int(a.other), -a.RequestID))
-    applications = reversed(applications)
-    applications = list(applications)
-    assignRooms(applications, rooms)
-    return applications
-
-def assignRooms(applications, rooms):
-    for a in applications:
-        a.possible_room_no = None
-
-        for r in rooms:
-            if r == a.requestedRoomNo and r.vacantSeats > 0:
-                a.possible_room_no = r.RoomNo
-                r.vacantSeats -= 1
-                break
-
-        if a.possible_room_no:
-            continue
-
-        for r in rooms:
-            if r.vacantSeats > 0:
-                a.possible_room_no = r.RoomNo
-                r.vacantSeats -= 1
-                break
-
-
-        
-    return 

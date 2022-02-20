@@ -13,3 +13,8 @@ class RoomAllotmentRequestForm(ModelForm):
     class Meta:
         model = RoomAllotmentRequest
         fields = ["requestedRoomNo", "attachment", "message", "sports", "debate", "other_skill"]
+
+
+class RoomAllotForm(forms.Form):
+    room_no = forms.IntegerField(label='room_no', required=False)
+    student_id = forms.IntegerField(label='student_id')

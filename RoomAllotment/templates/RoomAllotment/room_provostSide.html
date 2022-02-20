@@ -605,7 +605,8 @@
           
              <br><br><br><br><br><br><br><br><br><br><br><br><br>
           
-             <form action="notification.html" id="send" method="post">
+             <form action="{{request.path}}" id="send" method="post">
+                 {% csrf_token %}
                  <font size="4" style="margin-left: 17px; color:white; font-weight: bold;">
                      Student ID
                  </font>
