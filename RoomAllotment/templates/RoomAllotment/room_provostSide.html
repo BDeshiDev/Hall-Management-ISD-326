@@ -546,37 +546,39 @@
       
       <div class="anotherBg_box">
           <p>
+              <form action="{{request.path}}" id="sort" method="get">
               <br>
               <font size="4" style="margin-left: 17px; color:white;">Sort By</font>
               <br>
               
               <label for="html">
-                  <input type="radio" id="cgpa" name="sort_criteria" value="cgpa" style="margin-left: 17px;">
+                  <input type="radio" id="cgpa" name="sort" value="cgpa" style="margin-left: 17px;" {% if sortCrit == 'cgpa' %} checked="checked" {% endif %}>
                   <font size="3" style="margin-left: 8px; color:white;">
                       CGPA
                   </font>
               </label>
               <br>
               <label for="html">
-                  <input type="radio" id="seniority" name="sort_criteria" value="seniority" style="margin-left: 17px;">
+                  <input type="radio" id="seniority" name="sort" value="seniority" style="margin-left: 17px;" {% if sortCrit == 'seniority' %} checked="checked" {% endif %} >
                   <font size="3" style="margin-left: 8px; color:white;">
                       Seniority
                   </font>
               </label>
               <br>
               <label for="html">
-                  <input type="radio" id="present_address" name="sort_criteria" value="present_address" style="margin-left: 17px;">
+                  <input type="radio" id="present_address" name="sort" value="address" style="margin-left: 17px;"{% if sortCrit == 'address' %} checked="checked" {% endif %}>
                   <font size="3" style="margin-left: 8px; color:white;">
                       Present Address
                   </font>
               </label>
               <br>
               <label for="html">
-                  <input type="radio" id="e_activity" name="sort_criteria" value="e_activity" style="margin-left: 17px;">
+                  <input type="radio" id="e_activity" name="sort" value="eca" style="margin-left: 17px;"{% if sortCrit == 'eca' %} checked="checked" {% endif %}>
                   <font size="3" style="margin-left: 8px; color:white;">
                       Extra Curricular Activity
                   </font>
               </label>
+              </form>
              
               <br>
               <div class="selection_box_outside">
@@ -624,6 +626,11 @@
                  <br><br>
                   
               </form>
+              <button type="submit" form="sort"  style="margin-left: 390px; width:200px; height:40px">
+                  <font size="4" style="font-weight: bold;">
+                      Suggest Rooms
+                  </font>
+              </button>
           
               <button type="submit" form="send"  style="margin-left: 390px; width:80px; height:40px">
                   <font size="4" style="font-weight: bold;">

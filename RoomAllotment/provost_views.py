@@ -51,7 +51,7 @@ class ProvostRoomAllotView(View):
                     room_assigned = True
 
 
-            return render(request, 'RoomAllotment/room_provostSide.html',{"Requests": applications, "room_assigned": room_assigned})
+            return render(request, 'RoomAllotment/room_provostSide.html',{"Requests": applications, "room_assigned": room_assigned, 'sortCrit': sortCrit})
         return Http404("You are not logged in.")
 
 

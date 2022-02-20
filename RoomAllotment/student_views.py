@@ -64,7 +64,19 @@ class StudentRoomReqView(View):
                 room_request = form.save(commit=False)
                 room_request.stdID = context["user"]
 
-                room_request.save()
+                old_request = RoomAllotmentRequest.objects.filter(stdID__exact = context["user"], approvalStatus__exact = RoomAllotmentRequest.PENDING)
+                if len(old_request) > 0:
+                    old_request = old_request[0]
+                    old_request.requestedRoomNo = room_request.requestedRoomNo
+                    old_request.attachment = room_request.attachment
+                    old_request.message = room_request.message
+                    old_request.sports = room_request.sports
+                    old_request.debate = room_request.debate
+                    old_request.other = room_request.other
+                    old_request.save()
+                  
+                else:
+                    room_request.save()
 
             else:
                 print(form.errors)

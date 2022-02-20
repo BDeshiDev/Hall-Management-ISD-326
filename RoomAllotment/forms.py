@@ -12,7 +12,7 @@ class LoginForm(forms.Form):
 class RoomAllotmentRequestForm(ModelForm):
     class Meta:
         model = RoomAllotmentRequest
-        fields = ["requestedRoomNo", "attachment", "message", "sports", "debate", "other_skill"]
+        fields = ["requestedRoomNo", "attachment", "message", "sports", "debate", "other"]
 
 
 class RoomAllotForm(forms.Form):
