@@ -593,6 +593,10 @@
                                 {% elif request.approvalStatus == 3 %}
                                 Declined
                                 {% endif %}
+
+                                {% if room_assigned %}
+                                -- Suggested Room: {{ request.possible_room_no }}
+                                {% endif %}
                             </div>
                             {% endfor %}
                     </div>

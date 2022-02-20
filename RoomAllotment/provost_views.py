@@ -30,51 +30,94 @@ class ProvostRoomAllotView(View):
         if get_user(request):
             applications = RoomAllotmentRequest.objects.filter(approvalStatus__exact = RoomAllotmentRequest.PENDING)
 
-            assignments = {}
+            room_assigned = False
             sortCrit = request.GET.get('sort', None)
 
             if sortCrit:
                 rooms = Room.objects.filter(vacantSeats__gt = 0)
 
                 if sortCrit == 'seniority':
-                    applications, assingments = assignRoomsBySeniority(applications, rooms)
+                    applications = assignRoomsBySeniority(applications, rooms)
+                    room_assigned = True
                 elif sortCrit == 'cgpa':
-                    pass
+                    applications = assignRoomsByCgpa(applications, rooms)
+                    room_assigned = True
                 elif sortCrit == 'address':
-                    pass:
+                    applications = assignRoomsByAddress(applications, rooms)
+                    room_assigned = True
                 elif sortCrit == 'eca':
-                    pass:
+                    applications = assignRoomsByEca(applications, rooms)
+                    room_assigned = True
 
 
-            return render(request, 'RoomAllotment/room_provostSide.html',{"Requests":applications, "assignments": assignments})
+            return render(request, 'RoomAllotment/room_provostSide.html',{"Requests": applications, "room_assigned": room_assigned})
         return Http404("You are not logged in.")
+
+
+    def post(self, request, *args, **kwargs):
+        prv_id = kwargs['prv_id']
+        context = {"loggedIn": is_logged_in(request)}
+
+        if context["loggedIn"]:
+            fill_context(request, context)
+            if not context["is_provost"]:
+                return Http404("Not logged in")
+
+            
+
+        else:
+            return Http404("Not logged in")
 
 
 
 
 def assignRoomsBySeniority(applications, rooms):
-    applications = sorted(applications, key = lambda a : (a.stdID.level * 10 + a.stdID.term))
+    applications = sorted(applications, key = lambda a : (a.stdID.level, a.stdID.term, -a.RequestID))
     applications = reversed(applications)
-    return applications, {}
-
+    applications = list(applications)
+    assignRooms(applications, rooms)
+    return applications 
 
 def assignRoomsByCgpa(applications, rooms):
-    #TODO
-    applications = sorted(applications, key = lambda a : (a.stdID.level * 10 + a.stdID.term))
+    applications = sorted(applications, key = lambda a : (a.stdID.cgpa, -a.RequestID))
     applications = reversed(applications)
-    return applications, {}
-
+    applications = list(applications)
+    assignRooms(applications, rooms)
+    return applications
 
 def assignRoomsByAddress(applications, rooms):
-    #TODO
-    applications = sorted(applications, key = lambda a : (a.stdID.level * 10 + a.stdID.term))
+    applications = sorted(applications, key = lambda a : (1 if a.stdID.present_address != 'Dhaka' and a.stdID.permanent_address != 'Dhaka' else 0, -a.RequestID))
     applications = reversed(applications)
-    return applications, {}
-
+    applications = list(applications)
+    assignRooms(applications, rooms)
+    return applications
 
 def assignRoomsByEca(applications, rooms):
-    #TODO
-    applications = sorted(applications, key = lambda a : (a.stdID.level * 10 + a.stdID.term))
+    applications = sorted(applications, key = lambda a : (int(a.debate) + int(a.sports) + int(a.other), -a.RequestID))
     applications = reversed(applications)
-    return applications, {}
+    applications = list(applications)
+    assignRooms(applications, rooms)
+    return applications
 
+def assignRooms(applications, rooms):
+    for a in applications:
+        a.possible_room_no = None
+
+        for r in rooms:
+            if r == a.requestedRoomNo and r.vacantSeats > 0:
+                a.possible_room_no = r.RoomNo
+                r.vacantSeats -= 1
+                break
+
+        if a.possible_room_no:
+            continue
+
+        for r in rooms:
+            if r.vacantSeats > 0:
+                a.possible_room_no = r.RoomNo
+                r.vacantSeats -= 1
+                break
+
+
+        
+    return 
