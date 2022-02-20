@@ -4,9 +4,10 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Student side room</title>
+  <title>See applications</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    
     
     <style>
             body{   
@@ -141,7 +142,7 @@
                 width:275px;
                 height: 50px;
             }
-            .mini_box1:hover{
+           .mini_box1:hover{
                 background-color: #18404d;
             }
             .mini_box2{
@@ -304,7 +305,7 @@
             }
             .b_button {
                 position: absolute;
-                left:39%;
+                left:31%;
                 background-color: gainsboro;
                 border: none;
                 font-weight: bold;
@@ -420,7 +421,7 @@
             .attachment_box{
                 position: absolute;
                 background-color: #578999;
-                top:58%;
+                top:63%;
                 left: 15%;
                 width 350px;
                 height: 40px;
@@ -435,6 +436,73 @@
                 padding: 10px;
                 color: white;
             }
+            .selection_box{
+                position: absolute;
+                top:21%;
+                left:1%;
+                width:740px;
+                height:150px;
+                line-height:3em;
+                overflow:scroll;
+                padding:5px;
+                background-color:#578999;
+                color:white;
+                border:4px 
+                double white;
+            }
+            .selection_box_outside{
+                position: absolute;
+                top:37%;
+                left:1%;
+                width:760px;
+                height:200px;
+                line-height:3em;
+                padding:5px;
+                background-color:#3f6975;
+                color:white;
+                border:1px ;
+                border-style: solid;
+                border-color: white;
+            }
+            .selection_box_mini{
+                width:730px;
+                height:40px;
+                padding:5px;
+                background-color:#1b5b6e;
+                color:white;
+                font-size: 15px;
+                border:1px ;
+                border-style: solid;
+                border-color: white;
+            }
+            .selection_box_mini:hover{
+                background-color: #18404d;
+            }
+        
+            .info_box11{
+                position: absolute;
+                background-color: #4a7f8f;
+                top:2%;
+                left: 17%;
+                width:275px;
+                height: 42px;
+            }
+            .info_box12{
+                position: absolute;
+                background-color: #4a7f8f;
+                top:31%;
+                left: 1%;
+                width:1000px;
+                height: 200px;
+            }
+            .info_box13{
+                position: absolute;
+                background-color: #4a7f8f;
+                top:12%;
+                left: 17%;
+                width:275px;
+                height: 42px;
+            }
         </style>
 </head>
 
@@ -447,46 +515,55 @@
   <div class="opacity_box_heading">
       <div class="left_box1">
           <div class="left_box2">
-              <div class="mini_box1">
+        <div class="mini_box1">
                   <p></p>
                    <div class="text_h">Edit Information</div>
               </div>
               <div class="mini_box2">
                   <p></p>
-                   <div class="text_h">Dues Status</div>
+                   <div class="text_h">See Fund Requests</div>
               </div>
               <div class="mini_box3">
                   <p></p>
-                   <div class="text_h">Dining Status</div>
+                   <div class="text_h">See Defaulter List</div>
               </div>
               <div class="mini_box4">
                   <p></p>
-                   <div class="text_h">Request Services</div>
+                   <div class="text_h">See Complains</div>
               </div>
               <div class="mini_box5">
                   <p></p>
                   <div class="t_dropdown">
-                   <div class="text_h">Applications 
-                       <span style="margin-right: 1em;margin-: 10em"></span>
+                   <div class="text_h">
+                       Applications
+                       <span style="margin-right: 2em;margin-: 10em"></span>
                         <div class="t_dropdown-content" style="top:0;  right:0;">
-                            <a href="{{request.path}}">Room Application</a>
-                            <a href="">Certificate</a>
-                            <a href="">Others</a>
+                            <a href="{{request.path}}">Applications for Certificates</a>
+                            <a href="">Applications for Room Allotment</a>
+                            <a href="">Applications for Others</a>
                         </div>
                    </div>
                   </div>
               </div>
               <div class="mini_box6">
                   <p></p>
-                   <div class="text_h">Notices</div>
+                   <div class="text_h">Pay Staff Salary</div>
               </div>
               <div class="mini_box7">
                   <p></p>
-                   <div class="text_h">Complain</div>
+                   <div class="text_h">See Student Profile</div>
               </div>
               <div class="mini_box8">
                   <p></p>
-                   <div class="text_h">Change Password</div>
+                   <div class="text_h">See Room Info</div>
+              </div>
+              <div class="mini_box9">
+                  <p></p>
+                   <div class="text_h">fees</div>
+              </div>
+              <div class="mini_box10">
+                  <p></p>
+                   <div class="text_h">Notices</div>
               </div>
           </div>
       </div>
@@ -494,65 +571,52 @@
       
       <div class="anotherBg_box">
           <p>
-              <form action="{{request.path}}" id="send" method="POST">
-                  {% csrf_token %}
-                  
-                  
-                  
-                  <font size="4" style="margin-left: 17px; color:white; font-weight: bold">Preferred Room No(Optional)</font>
-                  <select id="price" style=" margin-left: 20px;
-                                              width: 180px; background: rgba(0,0,0,0.5); color: white; padding: 12px; font-size: 14px; border:4px double white; cursor: pointer;">   
-                        <option value="none">401</option>
-                        <option value="1">402</option>
-                  </select>
+                 <br>
+                 <font size="4" style="margin-left: 17px; color:white; font-weight: bold">Student ID </font>
+                 <div class="info_box11">
+                    <p></p>
+                    <font size="4" style="margin-left: 5px; color:white; ">1705090</font>
+                    </div>
 
-                  <br>
+                  
+          
+                 <br>
+                 <font size="4" style="margin-left: 17px; color:white; font-weight: bold">Preferred Room No</font>
+                 <div class="info_box13">
+                    <p></p>
+                    <font size="4" style="margin-left: 5px; color:white; ">401</font>
+                    </div>
+
+                  <br><br><br>
                   <font size="4" style="margin-left: 17px; color:white;">Application</font>
                   <br>
-                  <font size="4" style="margin-left: 17px; color: white">
-                  <textarea id="room_application" name="message" rows="8" cols="110">
-          </textarea>
-                  </font>
-
-                  <br><br>
-                  <font size="4" style="margin-left: 17px; color:white;">Attach documents</font>
-                  <div class="attachment_box">
-                      <input type="file" id="attached_file" name="attachment" multiple>
+                  <div class="info_box12">
+                       <font size="4" style="margin-left: 5px; color:white; ">401 bla bla</font>
                   </div>
 
-                  <br><br>
+                  <br><br><br><br><br><br><br><br><br><br><br>
+                  <font size="4" style="margin-left: 17px; color:white;">Attached document</font>
+                  <a href="..add link..." download>
+                       <font size="4" style="margin-left: 17px; color:white; font-weight: bold;">
+                           1705088.pdf
+                      </font>
+                  </a>
+          
+                  <br>
                   <font size="4" style="margin-left: 17px; color:white;">Skill</font>
                   <br>
-
-                  <label for="html">
-                      <input type="checkbox" id="sports" name="sports" value="sports" style="margin-left: 17px;">
-                      <font size="3" style="margin-left: 8px; color:white;">
-                          Sports
-                      </font>
-                  </label>
-                  <br>
-                  <label for="html">
-                      <input type="checkbox" id="debates" name="debate" value="debates" style="margin-left: 17px;">
-                      <font size="3" style="margin-left: 8px; color:white;">
-                          Debates
-                      </font>
-                  </label>
-                  <br>
-                  <label for="html">
-                      <input type="checkbox" id="others" name="other" value="others" style="margin-left: 17px;">
-                      <font size="3" style="margin-left: 8px; color:white;">
-                          Others
-                      </font>
-                  </label>
-
-
-                  
-              </form>
-              <button type="submit" form="send"  style="margin-left: 490px; width:80px; height:40px">
-                  <font size="4" style="font-weight: bold;">
-                    Send
+                  <font size="3" style="margin-left: 17px; color:white;">
+                         i.   Sports
+                   </font>
+                   <br>
+                   <font size="3" style="margin-left: 17px; color:white;">
+                         ii.  Debates
+                   </font>
+                   <br>
+                   <font size="3" style="margin-left: 17px; color:white;">
+                         iii. Others
                   </font>
-              </button>
+          <br>
           </p>
       </div>
       
@@ -576,7 +640,7 @@
         <font size="4" style="margin-left: 20px; color:white; font-weight: bold">User Manual</font>
         
         <div class="image_box3">
-            <img src="{% static 'image/rachel.jpg' %}"  style="width: 30px">
+            <img src="{% static 'image/provost.jpg' %}"  style="width: 30px">
         </div>
         <div class="image_box4">
         <div class="t_dropdown1">
