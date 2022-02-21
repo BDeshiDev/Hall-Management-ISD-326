@@ -17,7 +17,7 @@ def fill_context(request, context):
     student_id = request.session.get("student_id", None)
     if student_id:
         context["user"] = Student.objects.get(pk=student_id)
-        context["notifications"] = Notification.objects.filter(studentID=student_id)
+        context["notifications"] = Notification.objects.order_by('-timestamp').filter(studentID=student_id)
         context["is_student"] = True
         context["is_provost"] = False
     else:
@@ -81,3 +81,19 @@ def login_user_student(request, student_id, student_password):
 
     return None
 
+
+class NotificationInfo:
+    def __init__(self,title,detail,url) :
+        self.title = title
+        self.detail = detail
+        self.url = url
+
+
+
+notificationType = {
+    "RoomApplicationDenied" : 
+        NotificationInfo("Room request denied","Your room request denied by provost","student-home")
+    ,
+    "RoomApplicationApproved" : 
+        NotificationInfo("Room request approved","Your room request accepted at room no: ","student-home")
+}

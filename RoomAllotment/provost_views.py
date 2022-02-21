@@ -150,6 +150,10 @@ def assignRooms(assignments):
 
         if room_no is None:
 # decleine
+            notifType = notificationType["RoomApplicationDenied"]
+            denyNotification = Notification(studentID = student , title = notifType.title , details=notifType.detail , notifURL=notifType.url)
+            denyNotification.save()
+
             application.approvalStatus = RoomAllotmentRequest.DECLINED
             application.save()
         else:
@@ -162,6 +166,10 @@ def assignRooms(assignments):
             room.vacantSeats -= 1
             application.approvalStatus = RoomAllotmentRequest.ACCEPTED 
 # accept
+            notifType = notificationType["RoomApplicationApproved"]
+            acceptNotification = Notification(studentID = student , title = notifType.title , details=notifType.detail+str(room.RoomNo) , notifURL=notifType.url)
+            acceptNotification.save()
+
             student.save()
             room.save()
             if old_room is not None:
