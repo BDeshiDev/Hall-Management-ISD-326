@@ -1,35 +1,32 @@
-
-
-
-def assignRoomsBySeniority(applications, rooms):
+def suggestRoomsBySeniority(applications, rooms):
     applications = sorted(applications, key = lambda a : (a.stdID.level, a.stdID.term, -a.RequestID))
     applications = reversed(applications)
     applications = list(applications)
-    assignRooms(applications, rooms)
+    suggestRooms(applications, rooms)
     return applications 
 
-def assignRoomsByCgpa(applications, rooms):
+def suggestRoomsByCgpa(applications, rooms):
     applications = sorted(applications, key = lambda a : (a.stdID.cgpa, -a.RequestID))
     applications = reversed(applications)
     applications = list(applications)
-    assignRooms(applications, rooms)
+    suggestRooms(applications, rooms)
     return applications
 
-def assignRoomsByAddress(applications, rooms):
+def suggestRoomsByAddress(applications, rooms):
     applications = sorted(applications, key = lambda a : (1 if a.stdID.present_address != 'Dhaka' and a.stdID.permanent_address != 'Dhaka' else 0, -a.RequestID))
     applications = reversed(applications)
     applications = list(applications)
-    assignRooms(applications, rooms)
+    suggestRooms(applications, rooms)
     return applications
 
-def assignRoomsByEca(applications, rooms):
+def suggestRoomsByEca(applications, rooms):
     applications = sorted(applications, key = lambda a : (int(a.debate) + int(a.sports) + int(a.other), -a.RequestID))
     applications = reversed(applications)
     applications = list(applications)
-    assignRooms(applications, rooms)
+    suggestRooms(applications, rooms)
     return applications
 
-def assignRooms(applications, rooms):
+def suggestRooms(applications, rooms):
     for a in applications:
         a.possible_room_no = None
 
@@ -47,7 +44,5 @@ def assignRooms(applications, rooms):
                 a.possible_room_no = r.RoomNo
                 r.vacantSeats -= 1
                 break
-
-
         
     return 

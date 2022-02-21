@@ -17,4 +17,6 @@ class RoomAllotmentRequestForm(ModelForm):
 
 class RoomAllotForm(forms.Form):
     room_no = forms.IntegerField(label='room_no', required=False)
-    student_id = forms.IntegerField(label='student_id')
+    student_id = forms.IntegerField(label='student_id', required=False)
+    sortCrit = forms.CharField(label='sortCrit', max_length=20, required=False)
+    action = forms.CharField(label='action', max_length=20)

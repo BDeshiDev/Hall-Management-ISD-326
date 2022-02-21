@@ -1,6 +1,6 @@
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.http import Http404
+from django.http import Http404, HttpResponseNotFound
 from django.shortcuts import render
 from .models import *
 from .forms import *
@@ -18,10 +18,7 @@ class ProvostHomeView(View):
             context = {}
             fill_context(request, context)
 
-            # TODO send these free room list too
-            rooms = Room.objects.filter(vacantSeats__gt = 0)
-
-            return render(request, 'RoomAllotment/provost_profile.html',context)
+            return render(request, 'RoomAllotment/provost_profile.html', context)
         return Http404("You are not logged in.")
 
 
@@ -32,26 +29,33 @@ class ProvostRoomAllotView(View):
             applications = RoomAllotmentRequest.objects.filter(approvalStatus__exact = RoomAllotmentRequest.PENDING)
 
             room_assigned = False
-            sortCrit = request.GET.get('sort', None)
+            sortCrit = request.GET.get('sort', '')
 
             if sortCrit:
                 rooms = Room.objects.filter(vacantSeats__gt = 0)
 
                 if sortCrit == 'seniority':
-                    applications = assignRoomsBySeniority(applications, rooms)
+                    applications = suggestRoomsBySeniority(applications, rooms)
                     room_assigned = True
                 elif sortCrit == 'cgpa':
-                    applications = assignRoomsByCgpa(applications, rooms)
+                    applications = suggestRoomsByCgpa(applications, rooms)
                     room_assigned = True
                 elif sortCrit == 'address':
-                    applications = assignRoomsByAddress(applications, rooms)
+                    applications = suggestRoomsByAddress(applications, rooms)
                     room_assigned = True
                 elif sortCrit == 'eca':
-                    applications = assignRoomsByEca(applications, rooms)
+                    applications = suggestRoomsByEca(applications, rooms)
                     room_assigned = True
 
+            rooms = Room.objects.filter(vacantSeats__gt = 0)
 
-            return render(request, 'RoomAllotment/room_provostSide.html',{"Requests": applications, "room_assigned": room_assigned, 'sortCrit': sortCrit})
+            context = {
+                'Requests' : applications,
+                'room_assigned' : room_assigned,
+                'sortCrit' : sortCrit,
+                'rooms': rooms,
+            }
+            return render(request, 'RoomAllotment/room_provostSide.html', context)
         return Http404("You are not logged in.")
 
 
@@ -67,34 +71,36 @@ class ProvostRoomAllotView(View):
             form = RoomAllotForm(request.POST)
             if form.is_valid():
                 form.clean()
-                student_id = form.cleaned_data['student_id']
-                room_no = form.cleaned_data['room_no']
 
+                if form.cleaned_data['action'] == 'apply':
+                    student_id = form.cleaned_data['student_id']
+                    room_no = form.cleaned_data['room_no']
+                    if student_id == None:
+                        return HttpResponseRedirect(reverse('provost-room-allot', args=[prv_id]))
 
-                student = Student.objects.get(pk=student_id)
-                old_room = student.roomNo
+                    assignRooms({student_id: room_no})
 
-                application = RoomAllotmentRequest.objects.filter(stdID__exact = student)[0]
-                print(application)
+                elif form.cleaned_data['action'] == 'apply-all':
+                    applications = RoomAllotmentRequest.objects.filter(approvalStatus__exact = RoomAllotmentRequest.PENDING)
+                    rooms = Room.objects.filter(vacantSeats__gt = 0)
 
-                if room_no is None:
-                    application.approvalStatus = RoomAllotmentRequest.DECLINED
-                    application.save()
-                else:
-                    room = Room.objects.get(pk=room_no)
+                    if form.cleaned_data['sortCrit'] == 'seniority':
+                        applications = suggestRoomsBySeniority(applications, rooms)
 
-                    if old_room is not None:
-                        old_room.vacantSeats += 1
-                    
-                    student.roomNo = room
-                    room.vacantSeats -= 1
-                    application.approvalStatus = RoomAllotmentRequest.ACCEPTED 
+                    elif form.cleaned_data['sortCrit'] == 'cgpa':
+                        applications = suggestRoomsByCgpa(applications, rooms)
 
-                    student.save()
-                    room.save()
-                    if old_room is not None:
-                        old_room.save()
-                    application.save()
+                    elif form.cleaned_data['sortCrit'] == 'address':
+                        applications = suggestRoomsByAddress(applications, rooms)
+
+                    elif form.cleaned_data['sortCrit'] == 'eca':
+                        applications = suggestRoomsByEca(applications, rooms)
+
+                    else:
+                        return HttpResponseRedirect(reverse('provost-room-allot', args=[prv_id]))
+
+                    assignRooms({a.stdID.stdID : a.possible_room_no for a in applications})
+
 
                 return HttpResponseRedirect(reverse('provost-room-allot', args=[prv_id]))
             else:
@@ -104,3 +110,32 @@ class ProvostRoomAllotView(View):
             return Http404("Not logged in")
 
 
+def assignRooms(assignments):
+    for student_id, room_no in assignments.items():
+        print(student_id, room_no)
+
+        student = Student.objects.get(pk=student_id)
+        old_room = student.roomNo
+
+        application = RoomAllotmentRequest.objects.filter(stdID__exact = student, approvalStatus__exact = RoomAllotmentRequest.PENDING)[0]
+
+        if room_no is None:
+            print(application)
+            application.approvalStatus = RoomAllotmentRequest.DECLINED
+            application.save()
+        else:
+            room = Room.objects.get(pk=room_no)
+
+            if old_room is not None:
+                old_room.vacantSeats += 1
+            
+            student.roomNo = room
+            room.vacantSeats -= 1
+            application.approvalStatus = RoomAllotmentRequest.ACCEPTED 
+
+            student.save()
+            room.save()
+            if old_room is not None:
+                old_room.save()
+            application.save()
+    return

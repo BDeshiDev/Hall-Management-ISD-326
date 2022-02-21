@@ -513,8 +513,8 @@
                        Applications
                        <span style="margin-right: 2em;margin-: 10em"></span>
                         <div class="t_dropdown-content" style="top:0;  right:0;">
-                            <a href="{{request.path}}">Applications for Certificates</a>
-                            <a href="">Applications for Room Allotment</a>
+                            <a href="">Applications for Certificates</a>
+                            <a href="{{request.path}}">Applications for Room Allotment</a>
                             <a href="">Applications for Others</a>
                         </div>
                    </div>
@@ -595,20 +595,20 @@
                     </p>
                     <div class="selection_box">
                         {% for request in Requests %}
-                            <div class="selection_box_mini" onclick="location.href='{% url 'home' %}'">Request by: {{request.stdID.stdID}},  Status:
-                                {% if request.approvalStatus == 1 %}
-                                Pending
-                                {% elif request.approvalStatus == 2 %}
-                                Accepted
-                                {% elif request.approvalStatus == 3 %}
-                                Declined
+                            <div class="selection_box_mini" onclick="window.open('/', '_blank')">Request by: {{request.stdID.stdID}}
+                                {% if request.requestedRoomNo %}
+                                    , requested {{request.requestedRoomNo.RoomNo}}
                                 {% endif %}
-
                                 {% if room_assigned %}
-                                -- Suggested Room: {{ request.possible_room_no }}
+                                    -- Suggested
+                                    {% if request.possible_room_no == None %}
+                                        Decline
+                                    {% else %}
+                                        Room: {{ request.possible_room_no }}
+                                    {% endif %}
                                 {% endif %}
                             </div>
-                            {% endfor %}
+                        {% endfor %}
                     </div>
                 </div>
               
@@ -618,33 +618,41 @@
              <form action="{{request.path}}" id="send" method="post">
                  {% csrf_token %}
                  
+                 <input type="hidden" name="sortCrit" value="{{sortCrit}}">
                  
                  <font size="4" style="margin-left: 17px; color:white; font-weight: bold">Student ID</font>
-                 <select id="price" style=" margin-left: 20px;
+                 <select id="price" name="student_id" style=" margin-left: 20px;
                                               width: 180px; background: rgba(0,0,0,0.5); color: white; padding: 12px; font-size: 14px; border:4px double white; cursor: pointer;">   
-                        <option value="none">1705089</option>
-                        <option value="1">1705090</option>
+                         <option disabled selected value></option>
+                         {% for request in Requests %}
+                            <option value="{{request.stdID.stdID}}">{{request.stdID.stdID}}</option>
+                            
+                         {% endfor %}
                  </select>
+
+
 
                  
                  <font size="4" style="margin-left: 150px; color:white; font-weight: bold">Room No</font>
-                 <select id="price" style=" margin-left: 20px;
+                 <select id="price" name="room_no" style=" margin-left: 20px;
                                               width: 180px; background: rgba(0,0,0,0.5); color: white; padding: 12px; font-size: 14px; border:4px double white; cursor: pointer;">   
-                        <option value="none">401</option>
-                        <option value="1">402</option>
+                        <option value>----- (decline)</option>
+                        {% for room in rooms %}
+                            <option value="{{room.RoomNo}}">{{room.RoomNo}} (vacant: {{room.vacantSeats}})</option>
+                        {% endfor %}
                  </select>
                  
 
                  <br><br>
                   
               </form>
-              <button type="submit" form="sort"  style="margin-left: 200px; width:100px; height:40px">
+              <button type="submit" form="send" name="action" value="apply" style="margin-left: 200px; width:100px; height:40px">
                   <font size="4" style="font-weight: bold;">
                       Apply
                   </font>
               </button>
           
-              <button type="submit" form="send"  style="margin-left: 170px; width:100px; height:40px">
+              <button type="submit" form="send" name="action" value="apply-all" style="margin-left: 170px; width:100px; height:40px">
                   <font size="4" style="font-weight: bold;">
                       Apply All
                   </font>
