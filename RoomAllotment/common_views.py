@@ -31,33 +31,46 @@ class LoginView(View):
             return Http404("already logged in")
 
         form = LoginForm(request.POST)
+        isStudentLogin = request.POST["loginType"] == "Student"
+        # print(request.POST)
+        context = {}
         if form.is_valid():
             form.clean()
             print(form.cleaned_data)
             user_identifier = form.cleaned_data['userIdentifier']
             password = form.cleaned_data['password']
-            try:
-                student_id = int(user_identifier)
-                if login_user_student(request, student_id, password):
-                    student_object = get_user(request)
-                    print("student login", student_object)
-                    return HttpResponseRedirect(reverse('student-home', args=[student_object.stdID]))
-                else:
-                    print("student login fail but userID is integer", form.cleaned_data)
-                    return HttpResponse("student login fail")
-            except ValueError:
-                # assume that this is provost login since userID != int
+
+            # assume that this is provost login since userID != int
+            if isStudentLogin:
+                try:
+                    student_id = int(user_identifier)
+                    if login_user_student(request, student_id, password):
+                        student_object = get_user(request)
+                        print("student login", student_object)
+                        return HttpResponseRedirect(reverse('student-home', args=[student_object.stdID]))
+                    else:
+                        context["Error"] = "Student Authentication Error"
+                        # return HttpResponse(form.errors)
+                        return render(request, 'RoomAllotment/login.html', context)
+                except ValueError:
+                    context["Error"] = "Student ID Error"
+                    # return HttpResponse(form.errors)
+                    return render(request, 'RoomAllotment/login.html', context)
+            else:
                 if login_user_provost(request, user_identifier, password):
                     provost_object = get_user(request)
                     print("provost login", provost_object)
                     return HttpResponseRedirect(reverse('provost-home', args=[provost_object.provostID]))
                 else:
-                    print("provost login fail", form.cleaned_data)
-                    return HttpResponse("provost login fail")
+                    context["Error"] = "Provost Authentication Error"
+                    # return HttpResponse(form.errors)
+                    return render(request, 'RoomAllotment/login.html', context)
+
         else:
             print("form had errors")
-            return HttpResponse(form.errors)
-
+            context["Error"] = "Authentication Error"
+            # return HttpResponse(form.errors)
+            return render(request, 'RoomAllotment/login.html', context)
 
 class LogoutView(View):
     def get(self, request, *args, **kwargs):
