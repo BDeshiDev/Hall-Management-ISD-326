@@ -26,6 +26,8 @@ class ProvostRoomAllotView(View):
     def get(self, request, *args, **kwargs):
         prv_id = kwargs['prv_id']
         if get_user(request):
+            context = {}
+            fill_context(request, context)
             applications = RoomAllotmentRequest.objects.filter(approvalStatus__exact = RoomAllotmentRequest.PENDING)
 
             room_assigned = False
@@ -49,12 +51,11 @@ class ProvostRoomAllotView(View):
 
             rooms = Room.objects.filter(vacantSeats__gt = 0)
 
-            context = {
-                'Requests' : applications,
-                'room_assigned' : room_assigned,
-                'sortCrit' : sortCrit,
-                'rooms': rooms,
-            }
+            context['Requests'] = applications
+            context['room_assigned'] = room_assigned
+            context['sortCrit'] = sortCrit
+            context['rooms'] = rooms
+            
             return render(request, 'RoomAllotment/room_provostSide.html', context)
         return Http404("You are not logged in.")
 
@@ -101,7 +102,6 @@ class ProvostRoomAllotView(View):
 
                     assignRooms({a.stdID.stdID : a.possible_room_no for a in applications})
 
-
                 return HttpResponseRedirect(reverse('provost-room-allot', args=[prv_id]))
             else:
                 print(form.errors)
@@ -110,17 +110,43 @@ class ProvostRoomAllotView(View):
             return Http404("Not logged in")
 
 
+class RoomApplicationBasicView(View):
+    def get(self, request, *args, **kwargs):
+        app_id = kwargs['app_id']
+        if get_user(request):
+            context = {}
+            fill_context(request, context)
+
+            if not context['is_provost']:
+                return HttpResponseNotFound('You are not logged in')
+
+
+            application = RoomAllotmentRequest.objects.get(pk=app_id)
+
+            skills = []
+            if application.sports:
+                skills.append('sports')
+            if application.debate:
+                skills.append('debate')
+            if application.other:
+                skills.append('others')
+
+            context['application'] = application
+            context['skills'] = skills
+
+            return render(request, 'RoomAllotment/see_applications.html', context)
+        else:
+            return HttpResponseNotFound('You are not logged in')
+
+
 def assignRooms(assignments):
     for student_id, room_no in assignments.items():
-        print(student_id, room_no)
-
         student = Student.objects.get(pk=student_id)
         old_room = student.roomNo
 
         application = RoomAllotmentRequest.objects.filter(stdID__exact = student, approvalStatus__exact = RoomAllotmentRequest.PENDING)[0]
 
         if room_no is None:
-            print(application)
             application.approvalStatus = RoomAllotmentRequest.DECLINED
             application.save()
         else:

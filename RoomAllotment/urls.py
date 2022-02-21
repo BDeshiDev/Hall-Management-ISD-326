@@ -19,5 +19,6 @@ urlpatterns = [
     path('logout/', common_views.LogoutView.as_view(), name='logout'),
     path('student/<int:std_id>/room-req', student_views.StudentRoomReqView.as_view(), name='student-room-req'),
     path('provost/<int:prv_id>/room-allot', provost_views.ProvostRoomAllotView.as_view(), name='provost-room-allot'),
+    path('room-app/<int:app_id>', provost_views.RoomApplicationBasicView.as_view(), name='provost-room-app-see'),
     path('notification_seen_by/<int:id>/<int:notifid>', student_views.NotificationView.as_view(), name='notification'),
 ]

@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>See applications</title>
+  <title>{{application.stdID.stdID}} applications</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     
@@ -538,8 +538,8 @@
                        Applications
                        <span style="margin-right: 2em;margin-: 10em"></span>
                         <div class="t_dropdown-content" style="top:0;  right:0;">
-                            <a href="{{request.path}}">Applications for Certificates</a>
-                            <a href="">Applications for Room Allotment</a>
+                            <a href="">Applications for Certificates</a>
+                            <a href="{% url 'provost-room-allot' prv_id=user.provostID %}">Applications for Room Allotment</a>
                             <a href="">Applications for Others</a>
                         </div>
                    </div>
@@ -575,7 +575,7 @@
                  <font size="4" style="margin-left: 17px; color:white; font-weight: bold">Student ID </font>
                  <div class="info_box11">
                     <p></p>
-                    <font size="4" style="margin-left: 5px; color:white; ">1705090</font>
+                    <font size="4" style="margin-left: 5px; color:white; ">{{application.stdID.stdID}}</font>
                     </div>
 
                   
@@ -584,14 +584,14 @@
                  <font size="4" style="margin-left: 17px; color:white; font-weight: bold">Preferred Room No</font>
                  <div class="info_box13">
                     <p></p>
-                    <font size="4" style="margin-left: 5px; color:white; ">401</font>
+                    <font size="4" style="margin-left: 5px; color:white; ">{% if application.requestedRoomNo is None %} none {% else %} {{application.requestedRoomNo.RoomNo}} {% endif %} </font>
                     </div>
 
                   <br><br><br>
                   <font size="4" style="margin-left: 17px; color:white;">Application</font>
                   <br>
                   <div class="info_box12">
-                       <font size="4" style="margin-left: 5px; color:white; ">401 bla bla</font>
+                       <font size="4" style="margin-left: 5px; color:white; ">{% if application.message %} {{application.message}} {% endif %}</font>
                   </div>
 
                   <br><br><br><br><br><br><br><br><br><br><br>
@@ -603,20 +603,18 @@
                   </a>
           
                   <br>
-                  <font size="4" style="margin-left: 17px; color:white;">Skill</font>
+                  <font size="4" style="margin-left: 17px; color:white;">Skill:</font>
                   <br>
-                  <font size="3" style="margin-left: 17px; color:white;">
-                         i.   Sports
-                   </font>
-                   <br>
-                   <font size="3" style="margin-left: 17px; color:white;">
-                         ii.  Debates
-                   </font>
-                   <br>
-                   <font size="3" style="margin-left: 17px; color:white;">
-                         iii. Others
-                  </font>
-          <br>
+
+                  <ul>
+
+                  {% for skill in skills %}
+                    <li>
+                    <font size="3" style="margin-left: 17px; color:white;">
+                         {{skill}}
+                    </font>
+                    </li>
+                  {% endfor %}
           </p>
       </div>
       
