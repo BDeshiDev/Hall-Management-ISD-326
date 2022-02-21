@@ -117,11 +117,10 @@ class RoomApplicationBasicView(View):
             context = {}
             fill_context(request, context)
 
-            if not context['is_provost']:
-                return HttpResponseNotFound('You are not logged in')
-
-
             application = RoomAllotmentRequest.objects.get(pk=app_id)
+
+            if not context['is_provost'] and not application.stdID == context['user']:
+                return HttpResponseNotFound('You are not logged in')
 
             skills = []
             if application.sports:
@@ -134,7 +133,10 @@ class RoomApplicationBasicView(View):
             context['application'] = application
             context['skills'] = skills
 
-            return render(request, 'RoomAllotment/see_applications.html', context)
+            if context['is_provost']:
+                return render(request, 'RoomAllotment/see_applications.html', context)
+            else:
+                return render(request, 'RoomAllotment/see_applications_student.html', context)
         else:
             return HttpResponseNotFound('You are not logged in')
 

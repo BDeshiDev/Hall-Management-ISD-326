@@ -39,6 +39,12 @@ class StudentRoomReqView(View):
             rooms = Room.objects.filter(vacantSeats__gt = 0)
             context["rooms"] = rooms
 
+            old_application = RoomAllotmentRequest.objects.filter(stdID__exact = context["user"], approvalStatus__exact = RoomAllotmentRequest.PENDING)
+            if len(old_application) > 0:
+                context["old_app"] = old_application[0]
+            else:
+                context["old_app"] = None
+
             return render(request, 'RoomAllotment/room.html', context)
         else:
             return HttpResponseNotFound("Not logged in")
