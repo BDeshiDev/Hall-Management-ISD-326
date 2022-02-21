@@ -446,23 +446,28 @@
   <div class="opacity_box_heading">
       <div class="left_box1">
           <div class="left_box2">
-         
+
           </div>
       </div>
         
       
       <div class="anotherBg_box">
           <p>
+            {% if Error %}
+                 <font size="4" style="margin-left: 350px; color:red; font-weight: bold;">{{ Error }}</font>
+            {% endif %}
              <form action="{{request.path}}" id="login" method="POST">
                  {% csrf_token %}
                  <br>
                  <font size="4" style="margin-left: 350px; color:white; font-weight: bold">User Type</font>
-                 <select id="price" style=" margin-left: 20px;
+                 <select name="loginType" id="price" style=" margin-left: 20px;
                                               width: 180px; background: rgba(0,0,0,0.5); color: white; padding: 12px; font-size: 14px; border:4px double white; cursor: pointer;">   
-                        <option value="none">Student</option>
-                        <option value="1">Provost</option>
+                        <option value="Student">Student</option>
+                        <option value="Provost">Provost</option>
                  </select>
-                     
+
+
+
                  <br><br>         
                  <font size="4" style="margin-left: 350px; color:white; font-weight: bold;">User ID</font>
                  <font size="4" style="margin-left: 45px; color: white">
