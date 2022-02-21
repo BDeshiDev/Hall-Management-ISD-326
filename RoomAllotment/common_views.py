@@ -33,6 +33,7 @@ class LoginView(View):
         form = LoginForm(request.POST)
         if form.is_valid():
             form.clean()
+            print(form.cleaned_data)
             user_identifier = form.cleaned_data['userIdentifier']
             password = form.cleaned_data['password']
             try:
@@ -43,7 +44,7 @@ class LoginView(View):
                     return HttpResponseRedirect(reverse('student-home', args=[student_object.stdID]))
                 else:
                     print("student login fail but userID is integer", form.cleaned_data)
-                    return HttpResponse("provost login fail")
+                    return HttpResponse("student login fail")
             except ValueError:
                 # assume that this is provost login since userID != int
                 if login_user_provost(request, user_identifier, password):

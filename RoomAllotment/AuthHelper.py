@@ -53,26 +53,30 @@ def is_logged_in(request):
 
 # return provost object if success
 def login_user_provost(request, provost_email, provost_password):
-    provost = Provost.objects.get(email=provost_email)
-    if provost and provost.password == provost_password:
-        request.session['provost_email'] = provost_email
-        return provost
+    try:
+        provost = Provost.objects.get(email=provost_email)
+        if provost and provost.password == provost_password:
+            request.session['provost_email'] = provost_email
+            return provost
+    except Exception as e:
+        print('provost authentication error')
     return None
 
 
 # return student object if success
 def login_user_student(request, student_id, student_password):
-    student = Student.objects.get(pk=student_id)
-    if student:
-        if student.password == student_password:
-            # model is a db thing
-            # can't store in this dictionary
-            # store id instead
-            request.session['student_id'] = student_id
-            return student
-        else:
-            print("Student Password mismatch ", student.password, str(student.password))
-    else:
+    try:
+        student = Student.objects.get(pk=student_id)
+        if student:
+            if student.password == student_password:
+                # model is a db thing
+                # can't store in this dictionary
+                # store id instead
+                request.session['student_id'] = student_id
+                return student
+            else:
+                print("Student Password mismatch ", student.password, str(student.password))
+    except Exception as e:
         print("no such student ")
 
     return None
