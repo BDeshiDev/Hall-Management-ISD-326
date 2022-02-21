@@ -497,13 +497,14 @@
               <form action="{{request.path}}" id="send" method="POST">
                   {% csrf_token %}
                   
-                  
-                  
                   <font size="4" style="margin-left: 17px; color:white; font-weight: bold">Preferred Room No(Optional)</font>
-                  <select id="price" style=" margin-left: 20px;
+                  <select id="requestedRoomNo" name="requestedRoomNo" style=" margin-left: 20px;
                                               width: 180px; background: rgba(0,0,0,0.5); color: white; padding: 12px; font-size: 14px; border:4px double white; cursor: pointer;">   
-                        <option value="none">401</option>
-                        <option value="1">402</option>
+
+                        <option value>----------</option>
+                        {% for room in rooms %}
+                        <option value="{{room.RoomNo}}">{{room.RoomNo}}</option>
+                        {% endfor %}
                   </select>
 
                   <br>

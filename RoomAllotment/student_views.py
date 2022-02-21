@@ -1,6 +1,6 @@
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.http import Http404
+from django.http import Http404, HttpResponseNotFound
 from django.shortcuts import render
 from .models import *
 from .forms import *
@@ -22,7 +22,7 @@ class StudentHomeView(View):
             
             return render(request, 'RoomAllotment/student_profile.html', context)
         else:
-            return Http404("Not Logged in")
+            return HttpResponseNotFound("Not logged in")
 
 
 class StudentRoomReqView(View):
@@ -38,11 +38,10 @@ class StudentRoomReqView(View):
 
             rooms = Room.objects.filter(vacantSeats__gt = 0)
             context["rooms"] = rooms
-            # TODO hook rooms
 
             return render(request, 'RoomAllotment/room.html', context)
         else:
-            return Http404("Not Logged in")
+            return HttpResponseNotFound("Not logged in")
 
 
     def post(self, request, *args, **kwargs):
@@ -53,7 +52,7 @@ class StudentRoomReqView(View):
         if context["loggedIn"]:
             fill_context(request, context)
             if (not context["is_student"]) or (context["user"].stdID != std_id):
-                return Http404("Not logged in")
+                return HttpResponseNotFound("Not logged in")
 
             form = RoomAllotmentRequestForm(request.POST)
 
@@ -85,7 +84,7 @@ class StudentRoomReqView(View):
             return HttpResponseRedirect(reverse('student-home', args=[context["user"].stdID]))
             
         else:
-            return Http404("Not Logged in")
+            return HttpResponseNotFound("Not logged in")
 
 
 class NotificationView(View):
