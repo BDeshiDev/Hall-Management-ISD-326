@@ -6,9 +6,9 @@ def get_user(request):
     if student_id:
         return Student.objects.get(pk=student_id)
 
-    provost_name = request.session.get("provost_name", None)
-    if provost_name:
-        return Provost.objects.get(name=provost_name)
+    provost_email = request.session.get("provost_email", None)
+    if provost_email:
+        return Provost.objects.get(email=provost_email)
 
     return None
 
@@ -21,9 +21,9 @@ def fill_context(request, context):
         context["is_student"] = True
         context["is_provost"] = False
     else:
-        provost_name = request.session.get("provost_name", None)
-        if provost_name:
-            context["user"] = Provost.objects.get(name=provost_name)
+        provost_email = request.session.get("provost_email", None)
+        if provost_email:
+            context["user"] = Provost.objects.get(email=provost_email)
             context["is_student"] = False
             context["is_provost"] = True
 
@@ -36,7 +36,7 @@ def log_out(request):
         pass
 
     try:
-        del request.session['provost_name']
+        del request.session['provost_email']
     except KeyError:
         pass
 
@@ -46,16 +46,16 @@ def log_out(request):
 def is_logged_in(request):
     if request.session.get("student_id", None):
         return True
-    if request.session.get("provost_name", None):
+    if request.session.get("provost_email", None):
         return True
     return False
 
 
 # return provost object if success
-def login_user_provost(request, provost_name, provost_password):
-    provost = Provost.objects.get(name=provost_name)
+def login_user_provost(request, provost_email, provost_password):
+    provost = Provost.objects.get(email=provost_email)
     if provost and provost.password == provost_password:
-        request.session['provost_name'] = provost_name
+        request.session['provost_email'] = provost_email
         return provost
     return None
 
