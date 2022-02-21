@@ -147,6 +147,7 @@ def assignRooms(assignments):
         application = RoomAllotmentRequest.objects.filter(stdID__exact = student, approvalStatus__exact = RoomAllotmentRequest.PENDING)[0]
 
         if room_no is None:
+# decleine
             application.approvalStatus = RoomAllotmentRequest.DECLINED
             application.save()
         else:
@@ -158,7 +159,7 @@ def assignRooms(assignments):
             student.roomNo = room
             room.vacantSeats -= 1
             application.approvalStatus = RoomAllotmentRequest.ACCEPTED 
-
+# accept
             student.save()
             room.save()
             if old_room is not None:
