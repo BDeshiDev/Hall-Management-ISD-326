@@ -596,9 +596,9 @@
 
                   <br><br><br><br><br><br><br><br><br><br><br>
                   <font size="4" style="margin-left: 17px; color:white;">Attached document</font>
-                  <a href="..add link..." download>
+                  <a href="{{ application.attachment}}" download>
                        <font size="4" style="margin-left: 17px; color:white; font-weight: bold;">
-                           1705088.pdf
+                        {{application.attachment}}
                       </font>
                   </a>
           
@@ -640,7 +640,7 @@
         <div class="image_box3">
             <img src="{% static 'image/i.png' %}"  style="width: 30px">
         </div>
-        <div class="image_box4">
+        {% comment %} <div class="image_box4">
         <div class="t_dropdown1">
                    
                        <img src="{% static 'image/notification.png' %}"  style="width: 30px">
@@ -666,7 +666,7 @@
                             </a>
                         </div>
                    </div>
-                  </div>
+                  </div> {% endcomment %}
        
             <a href="{% url 'logout' %}"><font size="4" style="margin-left: 1000px; color:white; font-weight: bold">Log Out</font></a>
         </p>
